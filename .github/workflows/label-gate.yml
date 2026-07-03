@@ -5,7 +5,7 @@ on:
       bump-labels:
         description: Comma-separated list of valid bump labels
         type: string
-        default: 'major,breaking,minor,feature,patch,fix,chore,dependencies'
+        default: 'breaking,feature,fix,chore,dependencies'
         required: false
       skip-labels:
         description: Comma-separated list of labels that bypass the gate

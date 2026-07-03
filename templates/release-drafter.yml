@@ -3,11 +3,11 @@ tag-template: 'v$RESOLVED_VERSION'
 
 categories:
   - title: Breaking Changes
-    labels: ['major', 'breaking']
+    labels: ['breaking']
   - title: Features
-    labels: ['minor', 'feature']
+    labels: ['feature']
   - title: Fixes
-    labels: ['patch', 'fix']
+    labels: ['fix']
   - title: Chores
     labels: ['chore', 'dependencies']
 
@@ -17,11 +17,11 @@ change-template: |
 
 version-resolver:
   major:
-    labels: ['major', 'breaking']
+    labels: ['breaking']
   minor:
-    labels: ['minor', 'feature']
+    labels: ['feature']
   patch:
-    labels: ['patch', 'fix', 'chore', 'dependencies']
+    labels: ['fix', 'chore', 'dependencies']
   default: patch
 
 exclude-labels: ['skip-changelog']

@@ -1,0 +1,21 @@
+# Canonical label set for all CAVA package repos.
+# Apply with: scripts/bootstrap-labels.sh <owner/repo>
+labels:
+  - name: breaking
+    color: 'B60205'
+    description: 'Breaking API change — triggers a major version bump'
+  - name: feature
+    color: '0075CA'
+    description: 'New functionality, backward-compatible — triggers a minor version bump'
+  - name: fix
+    color: '5319E7'
+    description: 'Bug fix — triggers a patch version bump'
+  - name: chore
+    color: 'E4E669'
+    description: 'Housekeeping, refactoring — patch bump, appears under Chores'
+  - name: dependencies
+    color: '0052CC'
+    description: 'Dependency updates — patch bump, appears under Chores'
+  - name: skip-changelog
+    color: 'EDEDED'
+    description: 'Excluded from the changelog entirely (typos, docs-only, etc.)'
