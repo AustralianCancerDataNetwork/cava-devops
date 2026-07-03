@@ -1,0 +1,60 @@
+name: Publish
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: Python version used to build the wheel
+        type: string
+        default: '3.12'
+        required: false
+      repository-url:
+        description: PyPI upload URL (override to https://test.pypi.org/legacy/ for testing)
+        type: string
+        default: 'https://upload.pypi.org/legacy/'
+        required: false
+      environment:
+        description: GitHub environment name configured for Trusted Publishing
+        type: string
+        default: 'pypi'
+        required: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    environment:
+      name: ${{ inputs.environment }}
+      url: >-
+        ${{
+          inputs.repository-url == 'https://upload.pypi.org/legacy/'
+            && format('https://pypi.org/p/{0}', github.event.repository.name)
+            || format('https://test.pypi.org/p/{0}', github.event.repository.name)
+        }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Check out the exact tag that triggered the publish.
+          ref: ${{ github.ref }}
+
+      - name: Verify tag is on main
+        run: |
+          if ! git branch -r --contains "${{ github.ref_name }}" | grep -q "origin/main"; then
+            echo "Tag ${{ github.ref_name }} is not reachable from origin/main. Aborting."
+            exit 1
+          fi
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      - name: Build
+        run: uv build
+
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: ${{ inputs.repository-url }}

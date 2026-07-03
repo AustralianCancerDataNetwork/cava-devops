@@ -1,0 +1,48 @@
+name: Label Gate
+on:
+  workflow_call:
+    inputs:
+      bump-labels:
+        description: Comma-separated list of valid bump labels
+        type: string
+        default: 'major,breaking,minor,feature,patch,fix,chore,dependencies'
+        required: false
+      skip-labels:
+        description: Comma-separated list of labels that bypass the gate
+        type: string
+        default: 'skip-changelog'
+        required: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr) {
+              core.setFailed('Label gate must run in a pull_request context.');
+              return;
+            }
+            const bumpLabels = new Set('${{ inputs.bump-labels }}'.split(',').map(l => l.trim()));
+            const skipLabels = new Set('${{ inputs.skip-labels }}'.split(',').map(l => l.trim()));
+            const prLabels = pr.labels.map(l => l.name);
+
+            if (prLabels.some(l => skipLabels.has(l))) {
+              console.log('skip-changelog label present — gate bypassed.');
+              return;
+            }
+
+            const found = prLabels.filter(l => bumpLabels.has(l));
+            if (found.length === 0) {
+              core.setFailed(
+                `No bump label found. Apply exactly one of: ${[...bumpLabels].join(', ')}.`
+              );
+            } else if (found.length > 1) {
+              core.setFailed(
+                `Multiple bump labels (${found.join(', ')}). Apply exactly one.`
+              );
+            } else {
+              console.log(`Bump label OK: ${found[0]}`);
+            }

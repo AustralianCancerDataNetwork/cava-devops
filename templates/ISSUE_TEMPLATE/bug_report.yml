@@ -1,0 +1,63 @@
+name: "Bug Report"
+description: Report a reproducible bug.
+type: "Bug"
+body:
+  - type: checkboxes
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I searched existing issues and this is not a duplicate.
+          required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One or two sentences describing the bug.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: >
+        Minimal, self-contained example that reproduces the issue.
+        Formatted automatically.
+      placeholder: Paste code here
+      render: python
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error output
+      description: Full traceback if applicable. Formatted automatically.
+      render: python-traceback
+
+  - type: textarea
+    id: system
+    attributes:
+      label: System info
+      description: |
+        Run this in your environment and paste the output:
+
+        ```shell
+        python <(curl -s https://raw.githubusercontent.com/AustralianCancerDataNetwork/cava-devops/main/scripts/cava_system_info.py)
+        ```
+      render: shell

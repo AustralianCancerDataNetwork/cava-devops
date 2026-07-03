@@ -1,0 +1,22 @@
+name: Release Drafter
+on:
+  workflow_call:
+    inputs:
+      config-name:
+        description: Config filename relative to .github/ in the calling repo
+        type: string
+        default: 'release-drafter.yml'
+        required: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - uses: release-drafter/release-drafter@v6
+        with:
+          config-name: ${{ inputs.config-name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

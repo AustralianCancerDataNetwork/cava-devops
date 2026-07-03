@@ -1,0 +1,41 @@
+name: Sync PR Description
+# Rewrites the PR's description field with the squash-merge commit's body.
+# Must run before release-drafter so $BODY reflects the merge-time summary,
+# not the stale PR opening description.
+on:
+  workflow_call:
+
+jobs:
+  sync:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = context.payload.pull_request.merge_commit_sha;
+            if (!sha) {
+              console.log('No merge_commit_sha found — skipping.');
+              return;
+            }
+            const { data: commit } = await github.rest.git.getCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: sha,
+            });
+            // Everything after the first blank line is the extended description.
+            const [, ...rest] = commit.message.split('\n\n');
+            const body = rest.join('\n\n').trim();
+            if (body) {
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                body,
+              });
+              console.log('PR description updated from merge commit body.');
+            } else {
+              console.log('Merge commit has no body — PR description unchanged.');
+            }

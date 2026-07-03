@@ -1,0 +1,69 @@
+name: Sync Templates
+# Pushes canonical templates from cava-devops/templates/ to each target repo
+# via a pull request. Triggered automatically when templates change, or
+# manually when a new package repo is added to the target list.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'templates/**'
+  workflow_dispatch:
+    inputs:
+      target-repo:
+        description: >
+          Sync to a single repo only (e.g. omop-emb). Leave blank to sync all.
+        type: string
+        default: ''
+        required: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Add new package repos here when onboarding them.
+        repo:
+          - OA_Configurator
+          - OMOP_Alchemy
+          - omop-emb
+          - omop-graph
+          - omop-spires
+          - orm-loader
+    steps:
+      - name: Skip if targeting a different repo
+        if: inputs.target-repo != '' && inputs.target-repo != matrix.repo
+        run: echo "Skipping ${{ matrix.repo }} (target is ${{ inputs.target-repo }})." && exit 0
+
+      - uses: actions/checkout@v4
+        with:
+          path: cava-devops
+
+      - uses: actions/checkout@v4
+        with:
+          repository: AustralianCancerDataNetwork/${{ matrix.repo }}
+          token: ${{ secrets.CAVA_SYNC_TOKEN }}
+          path: target
+
+      - name: Copy templates
+        run: |
+          mkdir -p target/.github/ISSUE_TEMPLATE
+          cp -r cava-devops/templates/ISSUE_TEMPLATE/. target/.github/ISSUE_TEMPLATE/
+          cp cava-devops/templates/PULL_REQUEST_TEMPLATE.md target/.github/PULL_REQUEST_TEMPLATE.md
+          cp cava-devops/templates/release-drafter.yml target/.github/release-drafter.yml
+          cp cava-devops/templates/CONTRIBUTING.md target/CONTRIBUTING.md
+
+      - name: Open PR if changes exist
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.CAVA_SYNC_TOKEN }}
+          path: target
+          commit-message: 'chore: sync templates from cava-devops'
+          branch: sync/templates-${{ github.run_id }}
+          title: 'chore: sync community templates from cava-devops'
+          body: |
+            Automated sync from [cava-devops](https://github.com/AustralianCancerDataNetwork/cava-devops).
+
+            Review and merge to apply the latest shared templates.
+          labels: 'chore'
+          delete-branch: true
