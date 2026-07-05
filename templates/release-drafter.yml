@@ -11,6 +11,9 @@ categories:
   - title: Chores
     labels: ['chore', 'dependencies']
 
+template: |
+  $CHANGES
+
 change-template: |
   - **$TITLE** (#$NUMBER) by @$AUTHOR
     $BODY
