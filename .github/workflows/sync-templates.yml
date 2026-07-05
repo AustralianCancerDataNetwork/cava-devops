@@ -28,21 +28,29 @@ jobs:
           # - omop-spires
           # - orm-loader
     steps:
-      - name: Skip if targeting a different repo
-        if: inputs.target-repo != '' && inputs.target-repo != matrix.repo
-        run: echo "Skipping ${{ matrix.repo }} (target is ${{ inputs.target-repo }})." && exit 0
+      - name: Determine whether to run for this repo
+        id: gate
+        run: |
+          if [[ "${{ inputs.target-repo }}" == "" || "${{ inputs.target-repo }}" == "${{ matrix.repo }}" ]]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - uses: actions/checkout@v5
+        if: steps.gate.outputs.run == 'true'
         with:
           path: cava-devops
 
       - uses: actions/checkout@v5
+        if: steps.gate.outputs.run == 'true'
         with:
           repository: AustralianCancerDataNetwork/${{ matrix.repo }}
           token: ${{ secrets.CAVA_SYNC_TOKEN }}
           path: target
 
       - name: Copy templates
+        if: steps.gate.outputs.run == 'true'
         run: |
           mkdir -p target/.github/ISSUE_TEMPLATE
           cp -r cava-devops/templates/ISSUE_TEMPLATE/. target/.github/ISSUE_TEMPLATE/
@@ -51,6 +59,7 @@ jobs:
           cp cava-devops/templates/CONTRIBUTING.md target/CONTRIBUTING.md
 
       - name: Open PR if changes exist
+        if: steps.gate.outputs.run == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.CAVA_SYNC_TOKEN }}

@@ -1,6 +1,6 @@
 name: Manual Release
-# Emergency escape hatch: create a tag and GitHub release without going through
-# the normal draft-publish flow. Use only when the normal path is broken.
+# Emergency escape hatch: create a tag and GitHub release on main without
+# going through the normal draft-publish flow. Trigger from main only.
 on:
   workflow_call:
     inputs:
@@ -8,11 +8,6 @@ on:
         description: Version to release (e.g. 1.2.3 — no leading v)
         type: string
         required: true
-      ref:
-        description: Branch or commit SHA to tag (defaults to main)
-        type: string
-        default: 'main'
-        required: false
       prerelease:
         description: Mark as pre-release
         type: boolean
@@ -25,11 +20,6 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: ${{ inputs.ref }}
-          fetch-depth: 0
-
       - name: Validate version format
         run: |
           if ! echo "${{ inputs.version }}" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then

@@ -38,7 +38,7 @@ jobs:
 
       - name: Run setup script
         if: inputs.setup-script != ''
-        run: bash ${{ inputs.setup-script }}
+        run: bash "${{ inputs.setup-script }}"
 
       - name: Lint
         if: inputs.ruff
