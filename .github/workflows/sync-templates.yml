@@ -1,12 +1,8 @@
 name: Sync Templates
 # Pushes canonical templates from cava-devops/templates/ to each target repo
-# via a pull request. Triggered automatically when templates change, or
-# manually when a new package repo is added to the target list.
+# via a pull request. Manual-only until CAVA_SYNC_TOKEN is configured and
+# all package repos are ready to onboard.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'templates/**'
   workflow_dispatch:
     inputs:
       target-repo:
@@ -22,24 +18,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Add new package repos here when onboarding them.
+        # Uncomment each repo when it is ready to be onboarded.
         repo:
-          - OA_Configurator
-          - OMOP_Alchemy
-          - omop-emb
-          - omop-graph
-          - omop-spires
-          - orm-loader
+          - cava-ci-test
+          # - OA_Configurator
+          # - OMOP_Alchemy
+          # - omop-emb
+          # - omop-graph
+          # - omop-spires
+          # - orm-loader
     steps:
       - name: Skip if targeting a different repo
         if: inputs.target-repo != '' && inputs.target-repo != matrix.repo
         run: echo "Skipping ${{ matrix.repo }} (target is ${{ inputs.target-repo }})." && exit 0
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           path: cava-devops
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           repository: AustralianCancerDataNetwork/${{ matrix.repo }}
           token: ${{ secrets.CAVA_SYNC_TOKEN }}
