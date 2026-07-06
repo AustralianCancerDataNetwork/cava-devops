@@ -1,4 +1,4 @@
-name: "Something is not working"
+name: "❗ Something is not working"
 description: Something behaves unexpectedly but you are not sure if it is a bug.
 body:
   - type: checkboxes
@@ -19,11 +19,15 @@ body:
   - type: textarea
     id: reproduction
     attributes:
-      label: Code for reproduction
-      description: >
-        Minimal, self-contained example. Formatted automatically.
-      placeholder: Paste code here
-      render: python
+      label: Reproduction
+      description: Steps and/or a minimal code example. Wrap code in triple backticks.
+      placeholder: |
+        1. Import X and call Y with Z
+        2. Observe unexpected behaviour
+
+        ```python
+        # minimal example
+        ```
     validations:
       required: true
 

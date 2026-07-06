@@ -1,4 +1,4 @@
-name: "Bug Report"
+name: "🐞 Bug Report"
 description: Report a reproducible bug.
 type: "Bug"
 body:
@@ -21,11 +21,14 @@ body:
     id: reproduction
     attributes:
       label: Reproduction
-      description: >
-        Minimal, self-contained example that reproduces the issue.
-        Formatted automatically.
-      placeholder: Paste code here
-      render: python
+      description: Steps and/or a minimal code example that reproduces the issue. Wrap code in triple backticks.
+      placeholder: |
+        1. Import X and call Y with Z
+        2. Observe error
+
+        ```python
+        # minimal example
+        ```
     validations:
       required: true
 
