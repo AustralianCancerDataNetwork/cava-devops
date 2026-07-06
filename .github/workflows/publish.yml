@@ -1,4 +1,9 @@
-name: Publish
+name: Build Distribution
+# Reusable workflow: verifies the tag is on main, builds the wheel and sdist,
+# and uploads them as a workflow artifact named "dist" for the caller to publish.
+# The publish step (pypa/gh-action-pypi-publish) must run in the CALLING
+# workflow so that the OIDC job_workflow_ref matches the trusted publisher
+# configuration on PyPI/TestPyPI.
 on:
   workflow_call:
     inputs:
@@ -7,37 +12,17 @@ on:
         type: string
         default: '3.12'
         required: false
-      repository-url:
-        description: PyPI upload URL (override to https://test.pypi.org/legacy/ for testing)
-        type: string
-        default: 'https://upload.pypi.org/legacy/'
-        required: false
-      environment:
-        description: GitHub environment name configured for Trusted Publishing
-        type: string
-        default: 'pypi'
-        required: false
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
       contents: read
-    environment:
-      name: ${{ inputs.environment }}
-      url: >-
-        ${{
-          inputs.repository-url == 'https://upload.pypi.org/legacy/'
-            && format('https://pypi.org/p/{0}', github.event.repository.name)
-            || format('https://test.pypi.org/p/{0}', github.event.repository.name)
-        }}
 
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          # Check out the exact tag that triggered the publish.
           ref: ${{ github.ref }}
 
       - name: Verify tag is on main
@@ -54,7 +39,7 @@ jobs:
       - name: Build
         run: uv build
 
-      - name: Publish
-        uses: pypa/gh-action-pypi-publish@release/v1
+      - uses: actions/upload-artifact@v4
         with:
-          repository-url: ${{ inputs.repository-url }}
+          name: dist
+          path: dist/

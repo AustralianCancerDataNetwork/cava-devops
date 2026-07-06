@@ -16,7 +16,7 @@ template: |
 
 change-template: |
   - **$TITLE** (#$NUMBER) by @$AUTHOR
-    $BODY
+  $BODY
 
 version-resolver:
   major:

@@ -26,8 +26,12 @@ jobs:
               commit_sha: sha,
             });
             // Everything after the first blank line is the extended description.
+            // Each line is pre-indented by 2 spaces so that multi-line bodies
+            // render as a consistent nested block under the PR title bullet in
+            // release-drafter's change-template.
             const [, ...rest] = commit.message.split('\n\n');
-            const body = rest.join('\n\n').trim();
+            const rawBody = rest.join('\n\n').trim();
+            const body = rawBody.split('\n').map(l => l.length > 0 ? '  ' + l : l).join('\n');
             if (body) {
               await github.rest.pulls.update({
                 owner: context.repo.owner,
