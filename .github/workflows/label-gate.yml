@@ -5,12 +5,12 @@ on:
       bump-labels:
         description: Comma-separated list of valid bump labels
         type: string
-        default: 'breaking,feature,fix,chore,dependencies'
+        default: 'breaking,feature,fix,dependencies'
         required: false
       skip-labels:
         description: Comma-separated list of labels that bypass the gate
         type: string
-        default: 'skip-changelog'
+        default: 'chore'
         required: false
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
             const prLabels = pr.labels.map(l => l.name);
 
             if (prLabels.some(l => skipLabels.has(l))) {
-              console.log('skip-changelog label present — gate bypassed.');
+              console.log('chore label present — gate bypassed.');
               return;
             }
 

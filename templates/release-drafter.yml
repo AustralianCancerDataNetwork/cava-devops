@@ -9,8 +9,8 @@ categories:
     labels: ['feature']
   - title: Fixes
     labels: ['fix']
-  - title: Chores
-    labels: ['chore', 'dependencies']
+  - title: Dependencies
+    labels: ['dependencies']
 
 template: |
   $CHANGES
@@ -25,9 +25,9 @@ version-resolver:
   minor:
     labels: ['feature']
   patch:
-    labels: ['fix', 'chore', 'dependencies']
+    labels: ['fix', 'dependencies']
   default: patch
 
-exclude-labels: ['skip-changelog']
+exclude-labels: ['chore']
 
 autolabeler: []

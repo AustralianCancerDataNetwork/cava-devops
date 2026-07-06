@@ -10,17 +10,17 @@ uv run ruff check .
 
 ## Opening a pull request
 
-1. Apply **exactly one** bump label before merging:
+1. Apply **exactly one** label before merging:
 
    | Label | When to use |
    |---|---|
-   | `major` / `breaking` | Public API change, backward-incompatible |
-   | `minor` / `feature` | New functionality, backward-compatible |
-   | `patch` / `fix` | Bug fix |
-   | `chore` / `dependencies` | Housekeeping, dependency updates |
-   | `skip-changelog` | Typo fix, docs-only — not worth a changelog entry |
+   | `breaking` | Public API change, backward-incompatible |
+   | `feature` | New functionality, backward-compatible |
+   | `fix` | Bug fix |
+   | `dependencies` | Dependency version update |
+   | `chore` | CI changes, refactoring, test additions, docs — anything that does not affect the public-facing package. Bypasses the label gate; excluded from the changelog and does not bump the version. |
 
-2. When merging (squash), write a clear extended description in the merge dialog. That text — not the PR's opening description — becomes the changelog entry for this change.
+2. When merging (squash), write a clear extended description in the merge dialog. That text — not the PR's opening description — becomes the changelog entry for this change. Leave it blank for `chore` PRs.
 
 ## Versioning and releases
 

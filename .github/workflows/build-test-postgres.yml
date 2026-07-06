@@ -1,0 +1,83 @@
+name: Build and Test (Postgres)
+# Reusable workflow identical to build-test.yml but with a Postgres service
+# container. Use for repos whose test suite requires a running database.
+# Pass postgres-image: 'pgvector/pgvector:pg16' for repos that need pgvector.
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: Python version to use
+        type: string
+        default: '3.12'
+        required: false
+      ruff:
+        description: Run ruff check
+        type: boolean
+        default: true
+        required: false
+      setup-script:
+        description: >
+          Path (relative to repo root) of a shell script to run before tests.
+        type: string
+        default: ''
+        required: false
+      postgres-image:
+        description: Docker image for the Postgres service
+        type: string
+        default: 'postgres:16'
+        required: false
+      postgres-db:
+        description: Database name to create
+        type: string
+        default: 'test'
+        required: false
+      postgres-user:
+        description: Postgres user
+        type: string
+        default: 'test'
+        required: false
+      postgres-password:
+        description: Postgres password
+        type: string
+        default: 'test'
+        required: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: ${{ inputs.postgres-image }}
+        env:
+          POSTGRES_DB:       ${{ inputs.postgres-db }}
+          POSTGRES_USER:     ${{ inputs.postgres-user }}
+          POSTGRES_PASSWORD: ${{ inputs.postgres-password }}
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Run setup script
+        if: inputs.setup-script != ''
+        run: bash "${{ inputs.setup-script }}"
+
+      - name: Lint
+        if: inputs.ruff
+        run: uv run ruff check .
+
+      - name: Test
+        run: uv run pytest -q

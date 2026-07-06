@@ -3,19 +3,16 @@
 labels:
   - name: breaking
     color: 'B60205'
-    description: 'Breaking API change — triggers a major version bump'
+    description: 'Incompatible API change. MAJOR: x+1.y.z'
   - name: feature
-    color: '0075CA'
-    description: 'New functionality, backward-compatible — triggers a minor version bump'
+    color: '0E8A16'
+    description: 'New backwards-compatible functionality. MINOR: x.y+1.z'
   - name: fix
-    color: '5319E7'
-    description: 'Bug fix — triggers a patch version bump'
+    color: '0075CA'
+    description: 'Bug fix, backwards-compatible. PATCH: x.y.z+1'
   - name: chore
-    color: 'E4E669'
-    description: 'Housekeeping, refactoring — patch bump, appears under Chores'
+    color: 'FEF2C0'
+    description: 'Maintenance, refactoring, or housekeeping. Excluded from changelog, no version bump.'
   - name: dependencies
-    color: '0052CC'
-    description: 'Dependency updates — patch bump, appears under Chores'
-  - name: skip-changelog
-    color: 'EDEDED'
-    description: 'Excluded from the changelog entirely (typos, docs-only, etc.)'
+    color: '6F42C1'
+    description: 'Dependency update. PATCH: x.y.z+1'
