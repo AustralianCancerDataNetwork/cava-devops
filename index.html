@@ -865,6 +865,14 @@
 <h1 id="cava-devops">cava-devops</h1>
 <p>Centralised CI/CD infrastructure for the <a href="https://github.com/AustralianCancerDataNetwork">AustralianCancerDataNetwork</a> Python packages. All reusable workflows live here; each package repo contains thin wrapper files that call them.</p>
 <h2 id="what-this-repo-provides">What this repo provides</h2>
+<div class="admonition warning">
+<p class="admonition-title">No CHANGELOG.md</p>
+<p>Package repos do not maintain a <code>CHANGELOG.md</code> file. The release history lives entirely in GitHub Releases, populated by <code>release-drafter</code>. Writing a <code>CHANGELOG.md</code> would require a bot commit back to <code>main</code> after each release, which violates the no-commit-back principle and requires a PAT or GitHub App with write access to bypass branch protection. GitHub Releases is the canonical changelog.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Template sync is not automated</p>
+<p>The <code>templates/</code> directory contains canonical issue and PR templates intended for distribution to each package repo. Automating that distribution (<code>sync-templates.yml</code>) requires a PAT or GitHub App with write access across all target repos, so that the sync workflow can open PRs in them. This is not currently configured. Templates must be copied manually when onboarding a new repo.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -892,7 +900,7 @@
 <tr>
 <td>Issue and PR templates</td>
 <td><code>templates/</code></td>
-<td>Synced to each package repo</td>
+<td>Canonical source; copied manually when onboarding</td>
 </tr>
 <tr>
 <td>Release-drafter config template</td>
@@ -903,7 +911,7 @@
 </table>
 <h2 id="design-principles">Design principles</h2>
 <ul>
-<li><strong>No commit-back.</strong> Versions are derived from git tags at build time (<a href="https://github.com/ofek/hatch-vcs"><code>hatch-vcs</code></a>). Nothing writes to <code>main</code> outside of reviewed PRs.</li>
+<li><strong>No commit-back.</strong> Versions are derived from git tags at build time (<a href="https://github.com/ofek/hatch-vcs"><code>hatch-vcs</code></a>). Nothing writes to <code>main</code> outside of reviewed PRs. This is the reason for both warnings above.</li>
 <li><strong>Label-driven releases.</strong> A PR cannot merge without exactly one bump label. The label determines both the changelog category and the version bump.</li>
 <li><strong>Centralised, not duplicated.</strong> A change to a reusable workflow here propagates to all callers on their next workflow run. No manual syncing of CI logic across 6 repos.</li>
 </ul>
