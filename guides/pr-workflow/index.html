@@ -478,34 +478,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/sync-pr-description/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    sync-pr-description
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/release-drafter/" class="md-nav__link">
         
   
@@ -794,30 +766,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-squash-merge-with-a-real-description" class="md-nav__link">
+  <a href="#5-squash-merge" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Squash-merge with a real description
+        5. Squash-merge
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="5. Squash-merge with a real description">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1008,30 +963,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-squash-merge-with-a-real-description" class="md-nav__link">
+  <a href="#5-squash-merge" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Squash-merge with a real description
+        5. Squash-merge
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="5. Squash-merge with a real description">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1150,13 +1088,13 @@
 </table>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>Do not include the issue number in the PR title. The changelog template already appends the PR number automatically (<code>(#15)</code> style). The issue reference belongs in the extended description at merge time (step 5) as <code>Fixes #42</code>, which closes the issue and appears in <code>$BODY</code>. Putting both in the title would produce two different numbers in one line.</p>
+<p>Do not include the issue number in the PR title. The changelog template already appends the PR number automatically (<code>(#15)</code> style). Putting both produces two different numbers in one line.</p>
 <p>The title is written for someone reading the changelog months later, not for the diff reviewer. Keep it concise and factual.</p>
 </div>
 <h3 id="opening-description">Opening description</h3>
 <p>This is <strong>only</strong> for reviewers. It does not appear in the changelog. Use it to explain context, trade-offs, or anything a reviewer needs to know.</p>
 <h3 id="linking-issues">Linking issues</h3>
-<p>Add <code>Fixes #42</code> or <code>Closes #42</code> in the description or in the merge-time extended description (step 5). GitHub auto-closes the linked issue when the PR merges.</p>
+<p>Add <code>Fixes #42</code> or <code>Closes #42</code> in the PR description. GitHub auto-closes the linked issue when the PR merges.</p>
 <div class="admonition success">
 <p class="admonition-title">Style Guide</p>
 <p>If the issues are enumerate (e.g. <code>- Fixes #42</code>), the title of the issue is being displayed instead of just the number.</p>
@@ -1165,21 +1103,16 @@
 <table>
 <thead>
 <tr>
-<th><strong>What your write</strong></th>
-<th><strong>Changelog field</strong></th>
-<th><strong>When</strong></th>
+<th>What you write</th>
+<th>Changelog field</th>
+<th>When</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>PR title</td>
-<td><code>$TITLE$</code>: The heading line for this entry</td>
+<td><code>$TITLE</code>: The heading line for this entry</td>
 <td>When the PR is opened; confirmed at merge</td>
-</tr>
-<tr>
-<td>Squash-merge extended description</td>
-<td><code>$BODY$</code>: The indented detail under the title</td>
-<td>Written at merge time (step 5)</td>
 </tr>
 </tbody>
 </table>
@@ -1227,78 +1160,11 @@
 <h2 id="4-review-and-approval">4. Review and approval</h2>
 <p>Normal PR review. Branch protection on <code>main</code> requires (usually) at least one approval. This process may be different amongst repositories.</p>
 <hr />
-<h2 id="5-squash-merge-with-a-real-description">5. Squash-merge with a real description</h2>
-<p>When merging, GitHub shows a dialog with two fields: a title (pre-filled from the PR title) and an extended description.</p>
-<div class="admonition important">
-<p class="admonition-title">Before clicking Merge</p>
-<ol>
-<li>Confirm the title is accurate. Edit it if anything changed during review.</li>
-<li>Clear the extended description box (or leave it blank if the repo uses "Pull request title only" as its default squash message).</li>
-<li>Write a fresh summary in your own words describing what changed and why.</li>
-<li>Include <code>Fixes #42</code> or <code>Closes #42</code> if this PR resolves a tracked issue.</li>
-</ol>
-</div>
-<p>This text is synced back to the PR description after merge and becomes the <code>$BODY</code> in the release notes.</p>
-<h3 id="example">Example</h3>
-<table>
-<thead>
-<tr><th>Merge dialog input</th><th>Release draft (raw markdown)</th></tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<strong>Title</strong><br>
-<code>Fix graph traversal null pointer</code>
-<br><br>
-<strong>Extended description</strong><br>
-<pre><code>Graph.traverse() raised a NullPointerException when
-called on an empty graph. Added an early return for
-that case; the existing behaviour is unchanged.
-
-Fixes #42</code></pre>
-</td>
-<td>
-<pre><code>### Fixes
-
-- **Fix graph traversal null pointer** (#15) by @nico-loesch
-  Graph.traverse() raised a NullPointerException
-  when called on an empty graph. Added an early
-  return for that case; the existing behaviour
-  is unchanged.
-
-  Fixes #42</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Extended description with list items</strong><br>
-<pre><code>Added an early return for empty graphs.
-
-- Existing behaviour unchanged
-- No API changes
-
-Fixes #42</code></pre>
-</td>
-<td>
-<pre><code>- **Fix graph traversal null pointer** (#15) by @nico-loesch
-  Added an early return for empty graphs.
-
-  - Existing behaviour unchanged
-  - No API changes
-
-  Fixes #42</code></pre>
-</td>
-</tr>
-</tbody>
-</table>
-
+<h2 id="5-squash-merge">5. Squash-merge</h2>
+<p>Confirm the PR title is accurate before clicking merge - it is the only field that appears in the changelog. The extended description box is not read by the release system; leave it blank.</p>
 <hr />
 <h2 id="6-automatic-draft-update">6. Automatic draft update</h2>
-<p>After merge, two workflow jobs run in sequence with no action needed:</p>
-<ol>
-<li><a href="../../workflows/sync-pr-description/"><code>sync-pr-description</code></a> reads the squash commit body and writes it back to the PR description field.</li>
-<li><a href="../../workflows/release-drafter/"><code>release-drafter</code></a> appends this PR's entry to the standing draft release and recomputes the suggested next version from the highest-priority bump label seen across all included PRs.</li>
-</ol>
+<p>After merge, <a href="../../workflows/release-drafter/"><code>release-drafter</code></a> appends this PR's entry to the standing draft release and recomputes the suggested next version from the highest-priority bump label seen across all included PRs.</p>
 <p>Repeat steps 2-6 for each PR. The draft accumulates entries until a release is published.</p>
 <hr />
 <h2 id="7-publish-the-release">7. Publish the release</h2>
