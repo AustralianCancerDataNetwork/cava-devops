@@ -9,6 +9,10 @@
          <lastmod>2026-07-15</lastmod>
     </url>
     <url>
+         <loc>https://australiancancerdatanetwork.github.io/cava-devops/guides/extending-workflows/</loc>
+         <lastmod>2026-07-15</lastmod>
+    </url>
+    <url>
          <loc>https://australiancancerdatanetwork.github.io/cava-devops/guides/pr-workflow/</loc>
          <lastmod>2026-07-15</lastmod>
     </url>
@@ -26,6 +30,10 @@
     </url>
     <url>
          <loc>https://australiancancerdatanetwork.github.io/cava-devops/workflows/build-test/</loc>
+         <lastmod>2026-07-15</lastmod>
+    </url>
+    <url>
+         <loc>https://australiancancerdatanetwork.github.io/cava-devops/workflows/deploy-docs/</loc>
          <lastmod>2026-07-15</lastmod>
     </url>
     <url>

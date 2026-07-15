@@ -546,6 +546,34 @@
   
   
     <li class="md-nav__item">
+      <a href="deploy-docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    deploy-docs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="manual-release/" class="md-nav__link">
         
   
@@ -682,6 +710,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/extending-workflows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending workflows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -762,6 +818,11 @@
 <td><a href="publish/"><code>publish.yml</code></a></td>
 <td>Tag push</td>
 <td>Verifies tag is on main, builds wheel and sdist, uploads as artifact</td>
+</tr>
+<tr>
+<td><a href="deploy-docs/"><code>deploy-docs.yml</code></a></td>
+<td>Tag push / <code>workflow_dispatch</code></td>
+<td>Installs <code>dev</code> extra and deploys MkDocs to GitHub Pages</td>
 </tr>
 <tr>
 <td><a href="manual-release/"><code>manual-release.yml</code></a></td>

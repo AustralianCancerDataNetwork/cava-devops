@@ -10,13 +10,11 @@
       
       
       
-        <link rel="canonical" href="https://australiancancerdatanetwork.github.io/cava-devops/workflows/build-test-postgres/">
+        <link rel="canonical" href="https://australiancancerdatanetwork.github.io/cava-devops/guides/extending-workflows/">
       
       
-        <link rel="prev" href="../build-test/">
+        <link rel="prev" href="../setup-new-repo/">
       
-      
-        <link rel="next" href="../release-drafter/">
       
       
         
@@ -27,7 +25,7 @@
     
     
       
-        <title>build-test-postgres - cava-devops</title>
+        <title>Extending workflows - cava-devops</title>
       
     
     
@@ -78,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#build-test-postgresyml" class="md-skip">
+        <a href="#extending-workflows" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              build-test-postgres
+              Extending workflows
             
           </span>
         </div>
@@ -311,8 +309,6 @@
       
   
   
-    
-  
   
   
     
@@ -325,11 +321,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
@@ -350,7 +346,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -368,7 +364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../workflows/" class="md-nav__link">
         
   
   
@@ -396,7 +392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../label-gate/" class="md-nav__link">
+      <a href="../../workflows/label-gate/" class="md-nav__link">
         
   
   
@@ -424,7 +420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../build-test/" class="md-nav__link">
+      <a href="../../workflows/build-test/" class="md-nav__link">
         
   
   
@@ -432,6 +428,263 @@
     
   
     build-test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/build-test-postgres/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-postgres
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/release-drafter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    release-drafter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/publish/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    publish
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/deploy-docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    deploy-docs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/manual-release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    manual-release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pr-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day-to-day PR workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup-new-repo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onboard a new repo
   
 
     
@@ -468,7 +721,7 @@
   <span class="md-ellipsis">
     
   
-    build-test-postgres
+    Extending workflows
   
 
     
@@ -486,7 +739,7 @@
   <span class="md-ellipsis">
     
   
-    build-test-postgres
+    Extending workflows
   
 
     
@@ -512,10 +765,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#required-status-check-name" class="md-nav__link">
+  <a href="#all-or-nothing-vs-step-level" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Required status check name
+        All-or-nothing vs step-level
       
     </span>
   </a>
@@ -523,10 +776,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
+  <a href="#baked-in-slots" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Inputs
+        Baked-in slots
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Baked-in slots">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-commands-build-test-postgresyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        setup-commands (build-test-postgres.yml)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-add-a-new-slot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to add a new slot
       
     </span>
   </a>
@@ -534,32 +815,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
+  <a href="#why-publish-stays-inline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pre-test-setup-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pre-test setup commands
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#repos-with-two-test-suites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Repos with two test suites
+        Why publish stays inline
       
     </span>
   </a>
@@ -570,261 +829,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../release-drafter/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    release-drafter
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../publish/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    publish
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../deploy-docs/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    deploy-docs
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../manual-release/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    manual-release
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Guides
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Guides
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../guides/pr-workflow/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Day-to-day PR workflow
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../guides/setup-new-repo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Onboard a new repo
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../guides/extending-workflows/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Extending workflows
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -864,10 +868,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#required-status-check-name" class="md-nav__link">
+  <a href="#all-or-nothing-vs-step-level" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Required status check name
+        All-or-nothing vs step-level
       
     </span>
   </a>
@@ -875,10 +879,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
+  <a href="#baked-in-slots" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Inputs
+        Baked-in slots
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Baked-in slots">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-commands-build-test-postgresyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        setup-commands (build-test-postgres.yml)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-add-a-new-slot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to add a new slot
       
     </span>
   </a>
@@ -886,32 +918,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
+  <a href="#why-publish-stays-inline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pre-test-setup-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pre-test setup commands
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#repos-with-two-test-suites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Repos with two test suites
+        Why publish stays inline
       
     </span>
   </a>
@@ -938,114 +948,60 @@
   
 
 
-<h1 id="build-test-postgresyml">build-test-postgres.yml</h1>
-<p>Identical to <a href="../build-test/"><code>build-test.yml</code></a> but includes a Postgres service container. Use this for repos whose test suite requires a running database. Supports both plain Postgres and pgvector via the <code>postgres-image</code> input.</p>
-<h2 id="required-status-check-name">Required status check name</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>build-test / test
+<h1 id="extending-workflows">Extending workflows</h1>
+<h2 id="all-or-nothing-vs-step-level">All-or-nothing vs step-level</h2>
+<p>GitHub reusable workflows (<code>on: workflow_call</code>) are all-or-nothing: when a repo
+calls <code>uses: cava-devops/.../build-test.yml@main</code>, the entire job runs as
+defined in cava-devops. There is no way to add, remove, or modify individual
+steps from the caller side.</p>
+<p><strong>Composite actions</strong> are the step-level equivalent. A composite action is a
+directory with an <code>action.yml</code> that defines a sequence of steps. A workflow can
+<code>uses:</code> a composite action inside a step, which lets callers mix reusable steps
+with their own. The trade-off: composite actions cannot host service containers
+(Postgres, Redis), so they cannot replace <code>build-test-postgres.yml</code>.</p>
+<h2 id="baked-in-slots">Baked-in slots</h2>
+<p>Where repos need to inject behaviour into a fixed workflow, cava-devops provides
+<code>inputs</code> that act as customisation slots. The caller passes values; the
+workflow interpolates them at defined points.</p>
+<h3 id="setup-commands-build-test-postgresyml"><code>setup-commands</code> (build-test-postgres.yml)</h3>
+<p>The most common slot. Accepts a YAML block scalar of shell commands run after
+<code>uv sync</code> and before lint and tests. Use it to write config files, seed data,
+or do any setup that requires the Postgres container to already be up.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">build-test</span><span class="p">:</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-postgres.yml@main</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="nt">postgres-db</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_db</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span><span class="nt">setup-commands</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="no">uv run my-tool configure my_package \</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">          </span><span class="no">--test-host localhost \</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">          </span><span class="no">--test-port 5432 \</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">          </span><span class="no">--test-user test \</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">          </span><span class="no">--test-password test \</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">          </span><span class="no">--test-database-name my_db</span>
 </code></pre></div>
-<p>As with <code>build-test.yml</code>, the prefix is the calling job name.</p>
-<h2 id="inputs">Inputs</h2>
-<table>
-<thead>
-<tr>
-<th>Input</th>
-<th>Type</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>python-version</code></td>
-<td>string</td>
-<td><code>3.12</code></td>
-<td>Python version</td>
-</tr>
-<tr>
-<td><code>ruff</code></td>
-<td>boolean</td>
-<td><code>true</code></td>
-<td>Whether to run <code>ruff check .</code></td>
-</tr>
-<tr>
-<td><code>setup-commands</code></td>
-<td>string</td>
-<td><code>''</code></td>
-<td>Shell commands to run before tests (YAML block scalar, no script file needed)</td>
-</tr>
-<tr>
-<td><code>postgres-image</code></td>
-<td>string</td>
-<td><code>postgres:16</code></td>
-<td>Docker image for the Postgres service</td>
-</tr>
-<tr>
-<td><code>postgres-db</code></td>
-<td>string</td>
-<td><code>test</code></td>
-<td>Database name to create</td>
-</tr>
-<tr>
-<td><code>postgres-user</code></td>
-<td>string</td>
-<td><code>test</code></td>
-<td>Postgres user</td>
-</tr>
-<tr>
-<td><code>postgres-password</code></td>
-<td>string</td>
-<td><code>test</code></td>
-<td>Postgres password</td>
-</tr>
-</tbody>
-</table>
-<h2 id="usage">Usage</h2>
-<p>Standard Postgres:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">build-test</span><span class="p">:</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-postgres.yml@main</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">      </span><span class="nt">postgres-db</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_test_db</span>
-</code></pre></div>
-<p>With pgvector:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">build-test</span><span class="p">:</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-postgres.yml@main</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">postgres-image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pgvector/pgvector:pg16</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="nt">postgres-user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="nt">postgres-password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span><span class="nt">postgres-db</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
-</code></pre></div>
-<h2 id="pre-test-setup-commands">Pre-test setup commands</h2>
-<p>Use <code>setup-commands</code> to write config or run any setup that must happen after the container is up but before tests run. Pass commands inline as a YAML block scalar:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">build-test</span><span class="p">:</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-postgres.yml@main</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="nt">postgres-db</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test_db</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nt">setup-commands</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="no">uv run omop-config configure my_package \</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">          </span><span class="no">--test-dialect postgresql+psycopg \</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">          </span><span class="no">--test-host localhost \</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">          </span><span class="no">--test-port 5432 \</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">          </span><span class="no">--test-user test \</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">          </span><span class="no">--test-password test \</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">          </span><span class="no">--test-database-name test_db</span>
-</code></pre></div>
-<p>The commands run after <code>uv sync</code> and before lint and tests.</p>
-<h2 id="repos-with-two-test-suites">Repos with two test suites</h2>
-<p>If a repo runs both SQLite and Postgres test suites, use both workflows with distinct job names:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">build-test-sqlite</span><span class="p">:</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test.yml@main</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="nt">build-test-postgres</span><span class="p">:</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-postgres.yml@main</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">      </span><span class="nt">postgres-db</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test_db</span>
-</code></pre></div>
-<p>The required status check names become <code>build-test-sqlite / test</code> and <code>build-test-postgres / test</code>. Add both to the branch protection ruleset.</p>
+<p>Commands run in the same runner environment as the rest of the workflow, so
+<code>uv run</code> uses the already-installed virtualenv.</p>
+<h2 id="when-to-add-a-new-slot">When to add a new slot</h2>
+<p>Add an input when a single point in a fixed workflow needs to vary per-repo and
+the variation can be expressed as a string (a command, a flag, a version). Do
+not add inputs to cover every possible difference; the default should work for
+most repos.</p>
+<p>If a repo's requirements diverge enough that a slot does not fit, copy the
+relevant workflow into the repo and maintain it locally. That is the correct
+escape hatch, not an ever-growing input list.</p>
+<h2 id="why-publish-stays-inline">Why publish stays inline</h2>
+<p><code>deploy-docs.yml</code> and <code>publish.yml</code> show the two sides of this boundary:</p>
+<ul>
+<li><strong><code>deploy-docs.yml</code></strong> is fully centralisable because the OIDC token's
+  <code>job_workflow_ref</code> claim is not relevant to GitHub Pages.</li>
+<li><strong><code>publish.yml</code></strong> (the PyPI upload step) must stay inline in each repo because
+  PyPI's trusted publisher checks <code>job_workflow_ref</code>. When a step runs inside a
+  reusable workflow, <code>job_workflow_ref</code> points to the reusable workflow's path
+  in cava-devops, not the calling repo. PyPI's trusted publisher entry is
+  registered against the calling repo's <code>publish.yml</code>, so moving the upload
+  step to cava-devops would make the OIDC claim mismatch and reject the token.</li>
+</ul>
 
 
 
