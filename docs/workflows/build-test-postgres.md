@@ -16,7 +16,7 @@ As with `build-test.yml`, the prefix is the calling job name.
 |---|---|---|---|
 | `python-version` | string | `3.12` | Python version |
 | `ruff` | boolean | `true` | Whether to run `ruff check .` |
-| `setup-script` | string | `''` | Path to a shell script to run before tests |
+| `setup-commands` | string | `''` | Shell commands to run before tests (YAML block scalar, no script file needed) |
 | `postgres-image` | string | `postgres:16` | Docker image for the Postgres service |
 | `postgres-db` | string | `test` | Database name to create |
 | `postgres-user` | string | `test` | Postgres user |
@@ -46,6 +46,28 @@ jobs:
       postgres-password: postgres
       postgres-db: postgres
 ```
+
+## Pre-test setup commands
+
+Use `setup-commands` to write config or run any setup that must happen after the container is up but before tests run. Pass commands inline as a YAML block scalar:
+
+```yaml
+jobs:
+  build-test:
+    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-postgres.yml@main
+    with:
+      postgres-db: test_db
+      setup-commands: |
+        uv run omop-config configure my_package \
+          --test-dialect postgresql+psycopg \
+          --test-host localhost \
+          --test-port 5432 \
+          --test-user test \
+          --test-password test \
+          --test-database-name test_db
+```
+
+The commands run after `uv sync` and before lint and tests.
 
 ## Repos with two test suites
 

@@ -53,7 +53,9 @@ nav:
     - build-test-postgres: workflows/build-test-postgres.md
     - release-drafter: workflows/release-drafter.md
     - publish: workflows/publish.md
+    - deploy-docs: workflows/deploy-docs.md
     - manual-release: workflows/manual-release.md
   - Guides:
     - Day-to-day PR workflow: guides/pr-workflow.md
     - Onboard a new repo: guides/setup-new-repo.md
+    - Extending workflows: guides/extending-workflows.md

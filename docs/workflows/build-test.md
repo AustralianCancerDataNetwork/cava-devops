@@ -16,7 +16,7 @@ The check name is `{calling-job-name} / test`. If you name the calling job diffe
 |---|---|---|---|
 | `python-version` | string | `3.12` | Python version |
 | `ruff` | boolean | `true` | Whether to run `ruff check .` |
-| `setup-script` | string | `''` | Path to a shell script to run before tests (for setup that cannot be expressed as a generic input) |
+| `setup-commands` | string | `''` | Shell commands to run before tests (YAML block scalar, no script file needed) |
 
 ## Usage
 
@@ -26,7 +26,7 @@ jobs:
     uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test.yml@main
 ```
 
-With a custom Python version and a setup script:
+With a custom Python version and inline setup commands:
 
 ```yaml
 jobs:
@@ -34,5 +34,8 @@ jobs:
     uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test.yml@main
     with:
       python-version: '3.13'
-      setup-script: scripts/setup-test-env.sh
+      setup-commands: |
+        uv run my-tool configure my_package \
+          --test-host localhost \
+          --test-port 5432
 ```

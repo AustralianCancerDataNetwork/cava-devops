@@ -1,0 +1,39 @@
+name: Deploy Docs
+# Reusable workflow. Checks out, installs the caller's dev extra via uv, and
+# deploys MkDocs to GitHub Pages. All doc dependencies must live in the
+# [project.optional-dependencies] dev group in the caller's pyproject.toml.
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: Python version to use
+        type: string
+        default: '3.12'
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          python-version: ${{ inputs.python-version }}
+
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Deploy to GitHub Pages
+        run: uv run mkdocs gh-deploy --force

@@ -15,9 +15,10 @@ on:
         type: boolean
         default: true
         required: false
-      setup-script:
+      setup-commands:
         description: >
-          Path (relative to repo root) of a shell script to run before tests.
+          Shell commands to run before tests (e.g. to write a config file).
+          Passed as a YAML block scalar; no external script file needed.
         type: string
         default: ''
         required: false
@@ -71,9 +72,9 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-extras --dev
 
-      - name: Run setup script
-        if: inputs.setup-script != ''
-        run: bash "${{ inputs.setup-script }}"
+      - name: Run setup commands
+        if: inputs.setup-commands != ''
+        run: ${{ inputs.setup-commands }}
 
       - name: Lint
         if: inputs.ruff

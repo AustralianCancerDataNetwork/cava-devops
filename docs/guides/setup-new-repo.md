@@ -85,13 +85,10 @@ name: Release Update
 on:
   pull_request:
     types: [closed]
+    branches: [main]
 jobs:
-  sync-description:
-    if: github.event.pull_request.merged == true
-    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/sync-pr-description.yml@main
   draft:
-    needs: [sync-description]
-    if: needs.sync-description.result == 'success'
+    if: github.event.pull_request.merged == true
     uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/release-drafter.yml@main
     secrets: inherit
 ```
@@ -124,13 +121,23 @@ jobs:
 
 ### docs.yml
 
-Update the trigger from `workflow_run: ["Release"]` or `push: branches: [main]` to:
-
 ```yaml
+name: Deploy Docs
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  deploy:
+    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/deploy-docs.yml@main
 ```
+
+All MkDocs plugins must be declared in the `dev` extra of `pyproject.toml`.
+The reusable workflow installs them via `uv sync --extra dev` and deploys with
+`uv run mkdocs gh-deploy --force`. See [deploy-docs.yml](../workflows/deploy-docs.md)
+for details.
 
 ---
 
@@ -167,7 +174,7 @@ Allow squash merging | enabled
 Default commit message | **Pull request title**
 Allow rebase merging | disabled
 
-"Pull request title" leaves the extended description box empty in the merge dialog, prompting the person merging to write the changelog entry from scratch. The other options pre-fill the box with commit messages or the PR opening description, which would pollute the changelog.
+"Pull request title" sets the squash commit message to the PR title only, which is all the changelog reads. The other options pre-fill with commit messages or the PR description and produce noisy commit messages.
 
 ### Branch protection ruleset on main
 
