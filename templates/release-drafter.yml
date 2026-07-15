@@ -15,8 +15,6 @@ categories:
 template: |
   $CHANGES
 
-  **Contributors:** $CONTRIBUTORS
-
 change-template: '- **$TITLE** (#$NUMBER) @$AUTHOR'
 
 version-resolver:

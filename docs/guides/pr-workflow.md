@@ -30,7 +30,7 @@ Branch off `main` using the PR branch name guide below, make your changes, publi
 | **Without an issue** | `Add support for custom node weights` | `add-support-custom-node-weights`
 
 !!! info
-    Do not include the issue number in the PR title. The changelog template already appends the PR number automatically (`(#15)` style). The issue reference belongs in the extended description at merge time (step 5) as `Fixes #42`, which closes the issue and appears in `$BODY`. Putting both in the title would produce two different numbers in one line.
+    Do not include the issue number in the PR title. The changelog template already appends the PR number automatically (`(#15)` style). Putting both produces two different numbers in one line.
 
     The title is written for someone reading the changelog months later, not for the diff reviewer. Keep it concise and factual.
 
@@ -40,17 +40,16 @@ This is **only** for reviewers. It does not appear in the changelog. Use it to e
 
 ### Linking issues
 
-Add `Fixes #42` or `Closes #42` in the description or in the merge-time extended description (step 5). GitHub auto-closes the linked issue when the PR merges.
+Add `Fixes #42` or `Closes #42` in the PR description. GitHub auto-closes the linked issue when the PR merges.
 
 !!! success "Style Guide"
     If the issues are enumerate (e.g. `- Fixes #42`), the title of the issue is being displayed instead of just the number.
 
 ### What ends up in the changelog
 
-| **What your write** | **Changelog field** | **When** |
+| What you write | Changelog field | When |
 |---|---|---|
-| PR title | `$TITLE$`: The heading line for this entry | When the PR is opened; confirmed at merge |
-| Squash-merge extended description | `$BODY$`: The indented detail under the title | Written at merge time (step 5) |
+| PR title | `$TITLE`: The heading line for this entry | When the PR is opened; confirmed at merge |
 
 ---
 
@@ -76,80 +75,15 @@ Normal PR review. Branch protection on `main` requires (usually) at least one ap
 
 ---
 
-## 5. Squash-merge with a real description
+## 5. Squash-merge
 
-When merging, GitHub shows a dialog with two fields: a title (pre-filled from the PR title) and an extended description.
-
-!!! important "Before clicking Merge"
-    1. Confirm the title is accurate. Edit it if anything changed during review.
-    2. Clear the extended description box (or leave it blank if the repo uses "Pull request title only" as its default squash message).
-    3. Write a fresh summary in your own words describing what changed and why.
-    4. Include `Fixes #42` or `Closes #42` if this PR resolves a tracked issue.
-
-This text is synced back to the PR description after merge and becomes the `$BODY` in the release notes.
-
-### Example
-
-<table>
-<thead>
-<tr><th>Merge dialog input</th><th>Release draft (raw markdown)</th></tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<strong>Title</strong><br>
-<code>Fix graph traversal null pointer</code>
-<br><br>
-<strong>Extended description</strong><br>
-<pre><code>Graph.traverse() raised a NullPointerException when
-called on an empty graph. Added an early return for
-that case; the existing behaviour is unchanged.
-
-Fixes #42</code></pre>
-</td>
-<td>
-<pre><code>### Fixes
-
-- **Fix graph traversal null pointer** (#15) by @nico-loesch
-  Graph.traverse() raised a NullPointerException
-  when called on an empty graph. Added an early
-  return for that case; the existing behaviour
-  is unchanged.
-
-  Fixes #42</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Extended description with list items</strong><br>
-<pre><code>Added an early return for empty graphs.
-
-- Existing behaviour unchanged
-- No API changes
-
-Fixes #42</code></pre>
-</td>
-<td>
-<pre><code>- **Fix graph traversal null pointer** (#15) by @nico-loesch
-  Added an early return for empty graphs.
-
-  - Existing behaviour unchanged
-  - No API changes
-
-  Fixes #42</code></pre>
-</td>
-</tr>
-</tbody>
-</table>
+Confirm the PR title is accurate before clicking merge - it is the only field that appears in the changelog. The extended description box is not read by the release system; leave it blank.
 
 ---
 
 ## 6. Automatic draft update
 
-After merge, two workflow jobs run in sequence with no action needed:
-
-1. [`sync-pr-description`](../workflows/sync-pr-description.md) reads the squash commit body and writes it back to the PR description field.
-2. [`release-drafter`](../workflows/release-drafter.md) appends this PR's entry to the standing draft release and recomputes the suggested next version from the highest-priority bump label seen across all included PRs.
+After merge, [`release-drafter`](../workflows/release-drafter.md) appends this PR's entry to the standing draft release and recomputes the suggested next version from the highest-priority bump label seen across all included PRs.
 
 Repeat steps 2-6 for each PR. The draft accumulates entries until a release is published.
 

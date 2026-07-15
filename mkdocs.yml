@@ -51,7 +51,6 @@ nav:
     - label-gate: workflows/label-gate.md
     - build-test: workflows/build-test.md
     - build-test-postgres: workflows/build-test-postgres.md
-    - sync-pr-description: workflows/sync-pr-description.md
     - release-drafter: workflows/release-drafter.md
     - publish: workflows/publish.md
     - manual-release: workflows/manual-release.md
