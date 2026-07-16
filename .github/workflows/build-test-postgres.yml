@@ -42,6 +42,11 @@ on:
         type: string
         default: 'test'
         required: false
+      ty-src:
+        description: Path passed to `ty check` for type checking
+        type: string
+        default: 'src/'
+        required: false
 
 jobs:
   test:
@@ -75,6 +80,9 @@ jobs:
       - name: Run setup commands
         if: inputs.setup-commands != ''
         run: ${{ inputs.setup-commands }}
+
+      - name: Type check
+        run: uv run ty check ${{ inputs.ty-src }}
 
       - name: Lint
         if: inputs.ruff

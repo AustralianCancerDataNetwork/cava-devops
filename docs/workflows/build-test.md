@@ -17,6 +17,7 @@ The check name is `{calling-job-name} / test`. If you name the calling job diffe
 | `python-version` | string | `3.12` | Python version |
 | `ruff` | boolean | `true` | Whether to run `ruff check .` |
 | `setup-commands` | string | `''` | Shell commands to run before tests (YAML block scalar, no script file needed) |
+| `ty-src` | string | `src/` | Path passed to `ty check` for type checking |
 
 ## Usage
 
