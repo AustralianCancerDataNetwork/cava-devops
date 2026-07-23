@@ -24,6 +24,13 @@ on:
         type: string
         default: 'src/'
         required: false
+      resolution:
+        description: >
+          uv resolution strategy (highest, lowest, lowest-direct). Use
+          lowest-direct to verify declared floor versions are sufficient.
+        type: string
+        default: 'highest'
+        required: false
 
 jobs:
   test:
@@ -38,7 +45,7 @@ jobs:
           python-version: ${{ inputs.python-version }}
 
       - name: Install dependencies
-        run: uv sync --all-extras --dev
+        run: uv sync --resolution ${{ inputs.resolution }} --all-extras --dev
 
       - name: Run setup commands
         if: inputs.setup-commands != ''
