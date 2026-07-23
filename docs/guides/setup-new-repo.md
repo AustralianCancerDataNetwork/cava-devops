@@ -147,7 +147,64 @@ Copy `templates/release-drafter.yml` from this repo to `.github/release-drafter.
 
 ---
 
-## 4. Delete old files
+## 4. Dependency ranges on sibling packages (if applicable)
+
+Skip this step if the repo has no dependency on another CAVA package (e.g. `oa-configurator`, which is a base/leaf package with no siblings of its own).
+
+If this repo depends on one or more CAVA sibling packages, prefer a semver range over an exact pin once the sibling has itself migrated to this centralised CI/CD (its releases are label-gated, so MAJOR only happens on a `breaking`-labelled PR):
+
+```toml
+dependencies = [
+    "oa-configurator>=0.1.2,<1.0.0",  # not =="0.1.2"
+]
+```
+
+### Add Dependabot
+
+Copy `templates/dependabot.yml` to `.github/dependabot.yml`, trimming the `allow` list down to only the sibling packages this repo actually depends on:
+
+```yaml
+version: 2
+updates:
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    versioning-strategy: "lockfile-only"
+    labels:
+      - "dependencies"
+    allow:
+      - dependency-name: "oa-configurator"
+```
+
+!!! warning "versioning-strategy is required"
+    Without `versioning-strategy: lockfile-only`, Dependabot's default behaviour rewrites the dependency's lower-bound constraint to match whatever it just bumped to, not just `uv.lock`. That silently collapses the declared range down to "whatever was last merged" and makes the `lowest-direct` job below pointless. Confirmed by direct testing during the rollout of this feature, not assumed from documentation.
+
+!!! warning "Must be on the default branch"
+    Dependabot only reads `.github/dependabot.yml` from the repository's default branch. An open, unmerged PR containing the file has no effect — it has to actually land on `main` before Dependabot does anything.
+
+### Add a minimum-version CI job
+
+Add a second `ci.yml` job with `resolution: lowest-direct`, so the declared floor of every range is verified on every PR, not just assumed:
+
+```yaml
+jobs:
+  build-test:
+    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test.yml@main
+
+  build-test-lowest-direct:
+    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test.yml@main
+    with:
+      resolution: lowest-direct
+```
+
+See [build-test.yml](../workflows/build-test.md#minimum-version-testing) (or [build-test-postgres.yml](../workflows/build-test-postgres.md#minimum-version-testing) for Postgres repos).
+
+This gives continuous compatibility coverage at both ends of the range: the floor is re-verified on every PR regardless of what's in the lock, and the "latest available" end moves forward each time a Dependabot PR is reviewed and merged. Neither proves every version in between works — that rests on the upstream package's own `breaking`-label discipline, not on anything tested here.
+
+---
+
+## 5. Delete old files
 
 Remove these files if present in the repo:
 
@@ -161,7 +218,7 @@ Remove these files if present in the repo:
 
 ---
 
-## 5. GitHub configuration
+## 6. GitHub configuration
 
 ### Merge settings
 
@@ -225,7 +282,7 @@ This creates five labels: `breaking`, `feature`, `fix`, `dependencies` (bump lab
 
 ---
 
-## 6. First release after cutover
+## 7. First release after cutover
 
 Merge all migration changes via a PR labelled `chore`. `merge.yml` triggers and release-drafter creates a draft. What to do next depends on whether the repo has existing tags.
 
