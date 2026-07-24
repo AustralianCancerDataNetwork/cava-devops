@@ -159,13 +159,13 @@ dependencies = [
 ]
 ```
 
-CI installs with `uv sync --frozen`, so it always tests exactly what's committed in `uv.lock` — see [Keeping `uv.lock` in sync](#keeping-uvlock-in-sync) below for how that stays consistent with `pyproject.toml`. Enable **Dependabot security updates** in the repo's settings (Advanced Security) for CVE coverage; no `dependabot.yml` file is needed for that.
+CI installs with plain `uv sync`, which prefers what's already committed in `uv.lock` but will fail loudly if it no longer satisfies `pyproject.toml`, see [Keeping `uv.lock` in sync](#keeping-uvlock-in-sync) below for how that stays consistent with `pyproject.toml`. Enable **Dependabot security updates** in the repo's settings (Advanced Security) for CVE coverage; no `dependabot.yml` file is needed for that.
 
 ---
 
 ## 5. Keeping `uv.lock` in sync
 
-`ci.yml` installs with `uv sync --frozen`, meaning CI tests *exactly* what's committed in `uv.lock` — no implicit re-resolution, no drift-catching safety net. That makes it important that `uv.lock` actually reflects `pyproject.toml` at all times, without relying on someone remembering to run `uv lock` after every dependency edit.
+`ci.yml` installs with plain `uv sync`. It prefers whatever's already committed in `uv.lock` (so a dependency that's still valid never gets bumped just because something newer shipped upstream), but it re-resolves and fails loudly the moment the lock can no longer satisfy `pyproject.toml`. Confirmed directly against `--frozen` (which blindly trusts the lock with no validation at all, silently passing even when the two have diverged) and `--locked`/`--check` (which fails on any staleness at all, not just genuine inconsistency) before settling on plain `uv sync` as the one mode that does both correctly. That makes it important that `uv.lock` actually reflects `pyproject.toml`, without relying on someone remembering to run `uv lock` after every dependency edit.
 
 Install the canonical pre-commit hook:
 
@@ -180,7 +180,7 @@ git config core.hooksPath .githooks
 
 What it does: when `pyproject.toml` is part of a commit, the hook diffs it to find exactly which dependency line(s) changed, then runs `uv lock --upgrade-package <name>` for just those -- not a blanket `uv lock`. This touches only the package(s) you actually edited (plus whatever *that* package's new version transitively requires), never an unrelated dependency that merely happens to have a newer release available. Confirmed directly: `uv lock --upgrade-package certifi` moved only `certifi`, leaving every other locked package untouched.
 
-This runs locally, before the commit is created -- by the time a PR is opened, `uv.lock` is already correct, and CI's `--frozen` install just confirms it.
+This runs locally, before the commit is created. By the time a PR is opened, `uv.lock` is already correct, and CI's `uv sync` install just confirms it.
 
 ---
 
