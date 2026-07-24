@@ -89,11 +89,11 @@ jobs:
         run: ${{ inputs.setup-commands }}
 
       - name: Type check
-        run: uv run ty check ${{ inputs.ty-src }}
+        run: uv run --resolution ${{ inputs.resolution }} ty check ${{ inputs.ty-src }}
 
       - name: Lint
         if: inputs.ruff
-        run: uv run ruff check .
+        run: uv run --resolution ${{ inputs.resolution }} ruff check .
 
       - name: Test
-        run: uv run pytest -q
+        run: uv run --resolution ${{ inputs.resolution }} pytest -q
