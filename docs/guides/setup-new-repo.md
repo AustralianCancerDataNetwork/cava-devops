@@ -147,7 +147,44 @@ Copy `templates/release-drafter.yml` from this repo to `.github/release-drafter.
 
 ---
 
-## 4. Delete old files
+## 4. Dependency ranges on sibling packages (if applicable)
+
+Skip this step if the repo has no dependency on another CAVA package (e.g. `oa-configurator`, which is a base/leaf package with no siblings of its own).
+
+If this repo depends on one or more CAVA sibling packages, prefer a semver range over an exact pin once the sibling has itself migrated to this centralised CI/CD (its releases are label-gated, so MAJOR only happens on a `breaking`-labelled PR):
+
+```toml
+dependencies = [
+    "oa-configurator>=0.1.2,<1.0.0",  # not =="0.1.2"
+]
+```
+
+CI installs with plain `uv sync`, which prefers what's already committed in `uv.lock` but will fail loudly if it no longer satisfies `pyproject.toml`, see [Keeping `uv.lock` in sync](#keeping-uvlock-in-sync) below for how that stays consistent with `pyproject.toml`. Enable **Dependabot security updates** in the repo's settings (Advanced Security) for CVE coverage; no `dependabot.yml` file is needed for that.
+
+---
+
+## 5. Keeping `uv.lock` in sync
+
+`ci.yml` installs with plain `uv sync`. It prefers whatever's already committed in `uv.lock` (so a dependency that's still valid never gets bumped just because something newer shipped upstream), but it re-resolves and fails loudly the moment the lock can no longer satisfy `pyproject.toml`. Confirmed directly against `--frozen` (which blindly trusts the lock with no validation at all, silently passing even when the two have diverged) and `--locked`/`--check` (which fails on any staleness at all, not just genuine inconsistency) before settling on plain `uv sync` as the one mode that does both correctly. That makes it important that `uv.lock` actually reflects `pyproject.toml`, without relying on someone remembering to run `uv lock` after every dependency edit.
+
+Install the canonical pre-commit hook:
+
+```bash
+mkdir -p .githooks
+cp <path-to-cava-devops>/templates/githooks/pre-commit .githooks/pre-commit
+chmod +x .githooks/pre-commit
+git config core.hooksPath .githooks
+```
+
+`git config core.hooksPath` is a one-time, per-clone setting (not committed), so each contributor needs to run it once after cloning.
+
+What it does: when `pyproject.toml` is part of a commit, the hook diffs it to find exactly which dependency line(s) changed, then runs `uv lock --upgrade-package <name>` for just those -- not a blanket `uv lock`. This touches only the package(s) you actually edited (plus whatever *that* package's new version transitively requires), never an unrelated dependency that merely happens to have a newer release available. Confirmed directly: `uv lock --upgrade-package certifi` moved only `certifi`, leaving every other locked package untouched.
+
+This runs locally, before the commit is created. By the time a PR is opened, `uv.lock` is already correct, and CI's `uv sync` install just confirms it.
+
+---
+
+## 6. Delete old files
 
 Remove these files if present in the repo:
 
@@ -161,7 +198,7 @@ Remove these files if present in the repo:
 
 ---
 
-## 5. GitHub configuration
+## 7. GitHub configuration
 
 ### Merge settings
 
@@ -225,7 +262,7 @@ This creates five labels: `breaking`, `feature`, `fix`, `dependencies` (bump lab
 
 ---
 
-## 6. First release after cutover
+## 8. First release after cutover
 
 Merge all migration changes via a PR labelled `chore`. `merge.yml` triggers and release-drafter creates a draft. What to do next depends on whether the repo has existing tags.
 
