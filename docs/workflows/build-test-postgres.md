@@ -21,7 +21,6 @@ As with `build-test.yml`, the prefix is the calling job name.
 | `postgres-db` | string | `test` | Database name to create |
 | `postgres-user` | string | `test` | Postgres user |
 | `postgres-password` | string | `test` | Postgres password |
-| `resolution` | string | `highest` | uv resolution strategy: `highest`, `lowest`, or `lowest-direct` |
 
 ## Usage
 
@@ -86,23 +85,3 @@ jobs:
 ```
 
 The required status check names become `build-test-sqlite / test` and `build-test-postgres / test`. Add both to the branch protection ruleset.
-
-## Minimum-version testing
-
-As with `build-test.yml`, add a second job with `resolution: lowest-direct` to
-verify that the floor of every declared dependency range is actually
-sufficient:
-
-```yaml
-jobs:
-  build-test:
-    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-postgres.yml@main
-    with:
-      postgres-db: my_test_db
-
-  build-test-lowest-direct:
-    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-postgres.yml@main
-    with:
-      postgres-db: my_test_db
-      resolution: lowest-direct
-```

@@ -17,7 +17,6 @@ Centralised CI/CD infrastructure for the [AustralianCancerDataNetwork](https://g
 | Label bootstrap script | `scripts/bootstrap-labels.sh` | One-command label setup via `gh` CLI |
 | Issue and PR templates | `templates/` | Canonical source; copied manually when onboarding |
 | Release-drafter config template | `templates/release-drafter.yml` | Canonical changelog config |
-| Dependabot config template | `templates/dependabot.yml` | For repos depending on other CAVA sibling packages; see [Onboard a new repo](guides/setup-new-repo.md) |
 
 ## Design principles
 

@@ -159,52 +159,32 @@ dependencies = [
 ]
 ```
 
-### Add Dependabot
-
-Copy `templates/dependabot.yml` to `.github/dependabot.yml`, trimming the `allow` list down to only the sibling packages this repo actually depends on:
-
-```yaml
-version: 2
-updates:
-  - package-ecosystem: "uv"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    versioning-strategy: "lockfile-only"
-    labels:
-      - "dependencies"
-    allow:
-      - dependency-name: "oa-configurator"
-```
-
-!!! warning "versioning-strategy is required"
-    Without `versioning-strategy: lockfile-only`, Dependabot's default behaviour rewrites the dependency's lower-bound constraint to match whatever it just bumped to, not just `uv.lock`. That silently collapses the declared range down to "whatever was last merged" and makes the `lowest-direct` job below pointless. Confirmed by direct testing during the rollout of this feature, not assumed from documentation.
-
-!!! warning "Must be on the default branch"
-    Dependabot only reads `.github/dependabot.yml` from the repository's default branch. An open, unmerged PR containing the file has no effect — it has to actually land on `main` before Dependabot does anything.
-
-### Add a minimum-version CI job
-
-Add a second `ci.yml` job with `resolution: lowest-direct`, so the declared floor of every range is verified on every PR, not just assumed:
-
-```yaml
-jobs:
-  build-test:
-    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test.yml@main
-
-  build-test-lowest-direct:
-    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test.yml@main
-    with:
-      resolution: lowest-direct
-```
-
-See [build-test.yml](../workflows/build-test.md#minimum-version-testing) (or [build-test-postgres.yml](../workflows/build-test-postgres.md#minimum-version-testing) for Postgres repos).
-
-This gives continuous compatibility coverage at both ends of the range: the floor is re-verified on every PR regardless of what's in the lock, and the "latest available" end moves forward each time a Dependabot PR is reviewed and merged. Neither proves every version in between works — that rests on the upstream package's own `breaking`-label discipline, not on anything tested here.
+CI installs with `uv sync --frozen`, so it always tests exactly what's committed in `uv.lock` — see [Keeping `uv.lock` in sync](#keeping-uvlock-in-sync) below for how that stays consistent with `pyproject.toml`. Enable **Dependabot security updates** in the repo's settings (Advanced Security) for CVE coverage; no `dependabot.yml` file is needed for that.
 
 ---
 
-## 5. Delete old files
+## 5. Keeping `uv.lock` in sync
+
+`ci.yml` installs with `uv sync --frozen`, meaning CI tests *exactly* what's committed in `uv.lock` — no implicit re-resolution, no drift-catching safety net. That makes it important that `uv.lock` actually reflects `pyproject.toml` at all times, without relying on someone remembering to run `uv lock` after every dependency edit.
+
+Install the canonical pre-commit hook:
+
+```bash
+mkdir -p .githooks
+cp <path-to-cava-devops>/templates/githooks/pre-commit .githooks/pre-commit
+chmod +x .githooks/pre-commit
+git config core.hooksPath .githooks
+```
+
+`git config core.hooksPath` is a one-time, per-clone setting (not committed), so each contributor needs to run it once after cloning.
+
+What it does: when `pyproject.toml` is part of a commit, the hook diffs it to find exactly which dependency line(s) changed, then runs `uv lock --upgrade-package <name>` for just those -- not a blanket `uv lock`. This touches only the package(s) you actually edited (plus whatever *that* package's new version transitively requires), never an unrelated dependency that merely happens to have a newer release available. Confirmed directly: `uv lock --upgrade-package certifi` moved only `certifi`, leaving every other locked package untouched.
+
+This runs locally, before the commit is created -- by the time a PR is opened, `uv.lock` is already correct, and CI's `--frozen` install just confirms it.
+
+---
+
+## 6. Delete old files
 
 Remove these files if present in the repo:
 
@@ -218,7 +198,7 @@ Remove these files if present in the repo:
 
 ---
 
-## 6. GitHub configuration
+## 7. GitHub configuration
 
 ### Merge settings
 
@@ -282,7 +262,7 @@ This creates five labels: `breaking`, `feature`, `fix`, `dependencies` (bump lab
 
 ---
 
-## 7. First release after cutover
+## 8. First release after cutover
 
 Merge all migration changes via a PR labelled `chore`. `merge.yml` triggers and release-drafter creates a draft. What to do next depends on whether the repo has existing tags.
 

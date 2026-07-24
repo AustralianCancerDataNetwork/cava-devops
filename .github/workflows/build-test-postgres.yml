@@ -47,13 +47,6 @@ on:
         type: string
         default: 'src/'
         required: false
-      resolution:
-        description: >
-          uv resolution strategy (highest, lowest, lowest-direct). Use
-          lowest-direct to verify declared floor versions are sufficient.
-        type: string
-        default: 'highest'
-        required: false
 
 jobs:
   test:
@@ -82,18 +75,18 @@ jobs:
           python-version: ${{ inputs.python-version }}
 
       - name: Install dependencies
-        run: uv sync --resolution ${{ inputs.resolution }} --all-extras --dev
+        run: uv sync --frozen --all-extras --dev
 
       - name: Run setup commands
         if: inputs.setup-commands != ''
         run: ${{ inputs.setup-commands }}
 
       - name: Type check
-        run: uv run --resolution ${{ inputs.resolution }} ty check ${{ inputs.ty-src }}
+        run: uv run ty check ${{ inputs.ty-src }}
 
       - name: Lint
         if: inputs.ruff
-        run: uv run --resolution ${{ inputs.resolution }} ruff check .
+        run: uv run ruff check .
 
       - name: Test
-        run: uv run --resolution ${{ inputs.resolution }} pytest -q
+        run: uv run pytest -q
