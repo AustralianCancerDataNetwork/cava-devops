@@ -51,6 +51,7 @@ nav:
     - label-gate: workflows/label-gate.md
     - build-test: workflows/build-test.md
     - build-test-postgres: workflows/build-test-postgres.md
+    - lint-imports: workflows/lint-imports.md
     - release-drafter: workflows/release-drafter.md
     - publish: workflows/publish.md
     - deploy-docs: workflows/deploy-docs.md
