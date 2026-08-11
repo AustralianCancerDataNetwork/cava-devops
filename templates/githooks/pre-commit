@@ -18,8 +18,7 @@ if ! command -v uv >/dev/null 2>&1; then
 fi
 
 changed_names=$(git diff --cached -- pyproject.toml \
-    | grep -E '^[+-]\s*"[A-Za-z0-9][A-Za-z0-9._-]*' \
-    | sed -E 's/^[+-]\s*"([A-Za-z0-9][A-Za-z0-9._-]*).*/\1/' \
+    | sed -nE 's/^[+-][[:space:]]*"([A-Za-z0-9][A-Za-z0-9._-]*).*/\1/p' \
     | sort -u)
 
 if [ -z "$changed_names" ]; then
