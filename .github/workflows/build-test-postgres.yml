@@ -1,10 +1,6 @@
 name: Build and Test (Postgres)
-# Reusable workflow that runs only the postgresql-marked test suite against
-# a live Postgres service container. Pairs with build-test.yml, which runs
-# everything else (the dialect-agnostic default suite) with no database at
-# all. One job per dialect axis, matching oa-configurator's own db_dialect
-# marker design. Never run this workflow alone: a repo with postgresql-marked
-# tests needs both jobs, or its default suite never runs anywhere.
+# Reusable workflow identical to build-test.yml but with a Postgres service
+# container. Use for repos whose test suite requires a running database.
 # Pass postgres-image: 'pgvector/pgvector:pg16' for repos that need pgvector.
 on:
   workflow_call:
@@ -92,15 +88,5 @@ jobs:
         if: inputs.ruff
         run: uv run ruff check .
 
-      - name: Test (postgresql-marked)
-        # Exit 5 (no tests collected) is not an error
-        # and instead is a fallback for repos without explicit
-        # postgresql-marked tests.
-        run: |
-          uv run pytest -q -m postgresql
-          code=$?
-          if [ "$code" -eq 5 ]; then
-            echo "No postgresql-marked tests collected; nothing to run."
-            exit 0
-          fi
-          exit "$code"
+      - name: Test
+        run: uv run pytest -q
