@@ -1,0 +1,77 @@
+name: Build and Test (DuckDB)
+# Reusable workflow that runs only the duckdb-marked test suite. DuckDB is
+# embedded, so unlike build-test-postgres-v2.yml this needs no service
+# container. Pairs with build-test.yml, which runs everything else (the
+# dialect-agnostic default suite). Never run this workflow alone: a repo
+# with duckdb-marked tests needs both jobs, or its default suite never runs
+# anywhere. Pass markers: 'duckdbvss' (or similar) for a repo whose
+# DuckDB-specific tests carry a different marker name.
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: Python version to use
+        type: string
+        default: '3.12'
+        required: false
+      ruff:
+        description: Run ruff check
+        type: boolean
+        default: true
+        required: false
+      setup-commands:
+        description: >
+          Shell commands to run before tests (e.g. to write a config file).
+          Passed as a YAML block scalar; no external script file needed.
+        type: string
+        default: ''
+        required: false
+      markers:
+        description: pytest -m marker expression selecting the DuckDB-only tests
+        type: string
+        default: 'duckdb'
+        required: false
+      ty-src:
+        description: Path passed to `ty check` for type checking
+        type: string
+        default: 'src/'
+        required: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Run setup commands
+        if: inputs.setup-commands != ''
+        run: ${{ inputs.setup-commands }}
+
+      - name: Type check
+        run: uv run ty check ${{ inputs.ty-src }}
+
+      - name: Lint
+        if: inputs.ruff
+        run: uv run ruff check .
+
+      - name: Test (duckdb-marked)
+        # Exit 5 (no tests collected) is not an error
+        # and instead is a fallback for repos without explicit
+        # duckdb-marked tests.
+        run: |
+          uv run pytest -q -m "${{ inputs.markers }}"
+          code=$?
+          if [ "$code" -eq 5 ]; then
+            echo "No duckdb-marked tests collected; nothing to run."
+            exit 0
+          fi
+          exit "$code"
