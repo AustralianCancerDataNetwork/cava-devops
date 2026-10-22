@@ -1,0 +1,37 @@
+name: ty
+# Reusable workflow that runs the ty type checker with the version locked in
+# the caller's uv.lock. ty needs the project's dependencies to resolve imports,
+# so this installs the full environment. Pair with ruff.yml and the
+# build-test-sqlite, build-test-postgres-v3 and build-test-duckdb workflows,
+# which no longer type check.
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: Python version to use
+        type: string
+        default: '3.12'
+        required: false
+      ty-src:
+        description: Path passed to `ty check`
+        type: string
+        default: 'src/'
+        required: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --locked --all-extras --dev
+
+      - name: Type check
+        run: uv run ty check ${{ inputs.ty-src }}

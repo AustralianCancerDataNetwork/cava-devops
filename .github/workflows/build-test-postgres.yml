@@ -1,4 +1,7 @@
 name: Build and Test (Postgres)
+# SUPERSEDED by build-test-postgres-v3.yml paired with build-test-sqlite.yml,
+# with ruff.yml and ty.yml for linting and type checking. Kept unchanged for
+# existing callers.
 # Reusable workflow identical to build-test.yml but with a Postgres service
 # container. Use for repos whose test suite requires a running database.
 # Pass postgres-image: 'pgvector/pgvector:pg16' for repos that need pgvector.

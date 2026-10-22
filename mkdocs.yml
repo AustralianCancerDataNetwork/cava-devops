@@ -50,9 +50,13 @@ nav:
     - Overview: workflows/index.md
     - label-gate: workflows/label-gate.md
     - build-test: workflows/build-test.md
+    - build-test-sqlite: workflows/build-test-sqlite.md
     - build-test-postgres: workflows/build-test-postgres.md
     - build-test-postgres-v2: workflows/build-test-postgres-v2.md
+    - build-test-postgres-v3: workflows/build-test-postgres-v3.md
     - build-test-duckdb: workflows/build-test-duckdb.md
+    - ruff: workflows/ruff.md
+    - ty: workflows/ty.md
     - release-drafter: workflows/release-drafter.md
     - publish: workflows/publish.md
     - deploy-docs: workflows/deploy-docs.md

@@ -1,4 +1,7 @@
 name: Build and Test (Postgres v2)
+# SUPERSEDED by build-test-postgres-v3.yml, which is identical without the
+# ruff and ty steps. Kept unchanged for existing callers.
+#
 # Reusable workflow that runs only the postgresql-marked test suite against
 # a live Postgres service container. Pairs with build-test.yml, which runs
 # everything else (the dialect-agnostic default suite) with no database at

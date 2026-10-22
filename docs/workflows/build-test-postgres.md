@@ -1,5 +1,8 @@
 # build-test-postgres.yml
 
+!!! warning "Superseded"
+    Use [`build-test-postgres-v3.yml`](build-test-postgres-v3.md) paired with [`build-test-sqlite.yml`](build-test-sqlite.md), with [`ruff.yml`](ruff.md) and [`ty.yml`](ty.md) for linting and type checking. This workflow keeps working unchanged for existing callers.
+
 Identical to [`build-test.yml`](build-test.md) but includes a Postgres service container. Use this for repos whose test suite requires a running database. Supports both plain Postgres and pgvector via the `postgres-image` input.
 
 ## Required status check name
