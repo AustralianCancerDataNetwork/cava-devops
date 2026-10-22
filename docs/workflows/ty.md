@@ -17,7 +17,7 @@ The check name is `{calling-job-name} / check`.
 | Input | Type | Default | Description |
 |---|---|---|---|
 | `python-version` | string | `3.12` | Python version |
-| `ty-src` | string | `src/` | Path passed to `ty check` |
+| `ty-src` | string | `src/ tests/` | Space-separated paths passed to `ty check` |
 
 ## Usage
 
@@ -27,14 +27,14 @@ jobs:
     uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/ty.yml@main
 ```
 
-For a repo whose package is not under `src/`:
+By default both `src/` and `tests/` are checked, so test doubles and fakes stay consistent with the interfaces they replace. For a repo whose package is not under `src/`:
 
 ```yaml
 jobs:
   ty:
     uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/ty.yml@main
     with:
-      ty-src: my_package
+      ty-src: my_package tests
 ```
 
 ## Updating ty

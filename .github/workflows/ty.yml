@@ -13,9 +13,9 @@ on:
         default: '3.12'
         required: false
       ty-src:
-        description: Path passed to `ty check`
+        description: Space-separated paths passed to `ty check`
         type: string
-        default: 'src/'
+        default: 'src/ tests/'
         required: false
 
 jobs:
