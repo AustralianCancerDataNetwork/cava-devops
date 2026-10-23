@@ -1,0 +1,34 @@
+name: Lint Import Boundaries
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: Python version to use
+        type: string
+        default: '3.12'
+        required: false
+      config-path:
+        description: Path to the calling repository's import-linter configuration
+        type: string
+        default: '.importlinter'
+        required: false
+
+jobs:
+  lint-imports:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Check import contracts
+        env:
+          IMPORT_LINTER_CONFIG: ${{ inputs.config-path }}
+        run: uv run lint-imports --config "$IMPORT_LINTER_CONFIG"
