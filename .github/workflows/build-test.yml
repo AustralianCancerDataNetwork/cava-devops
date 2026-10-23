@@ -24,6 +24,18 @@ on:
         type: string
         default: 'src/'
         required: false
+      sibling-repos:
+        description: >
+          Newline-separated repository names to check out as real siblings
+          before `uv sync`, for private path dependencies not published to
+          PyPI. Requires the `token` secret.
+        type: string
+        default: ''
+        required: false
+    secrets:
+      token:
+        description: Fine-grained PAT with Contents:read on the sibling repos — only needed if sibling-repos is set
+        required: false
 
 jobs:
   test:
@@ -32,6 +44,16 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
+
+      - name: Checkout sibling repos
+        if: inputs.sibling-repos != ''
+        env:
+          GH_TOKEN: ${{ secrets.token }}
+        run: |
+          while IFS= read -r repo; do
+            [ -z "$repo" ] && continue
+            git clone --quiet "https://x-access-token:${GH_TOKEN}@github.com/AustralianCancerDataNetwork/${repo}" "../${repo}"
+          done <<< "${{ inputs.sibling-repos }}"
 
       - uses: astral-sh/setup-uv@v5
         with:
