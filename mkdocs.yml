@@ -52,6 +52,8 @@ nav:
     - build-test: workflows/build-test.md
     - build-test-postgres: workflows/build-test-postgres.md
     - lint-imports: workflows/lint-imports.md
+    - build-test-postgres-v2: workflows/build-test-postgres-v2.md
+    - build-test-duckdb: workflows/build-test-duckdb.md
     - release-drafter: workflows/release-drafter.md
     - publish: workflows/publish.md
     - deploy-docs: workflows/deploy-docs.md
