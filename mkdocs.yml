@@ -57,6 +57,7 @@ nav:
     - build-test-duckdb: workflows/build-test-duckdb.md
     - ruff: workflows/ruff.md
     - ty: workflows/ty.md
+    - lint-imports: workflows/lint-imports.md
     - release-drafter: workflows/release-drafter.md
     - publish: workflows/publish.md
     - deploy-docs: workflows/deploy-docs.md

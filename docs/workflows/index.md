@@ -13,6 +13,7 @@ All workflows are called via `uses: AustralianCancerDataNetwork/cava-devops/.git
 | [`ty.yml`](ty.md) | PR open/update | `ty check` with the version locked in `uv.lock` |
 | [`build-test-sqlite.yml`](build-test-sqlite.md) | PR open/update | Default (SQLite) suite without ruff and ty; replaces `build-test.yml`; pair with `ruff.yml` and `ty.yml` |
 | [`build-test-postgres-v3.yml`](build-test-postgres-v3.md) | PR open/update | `build-test-postgres-v2.yml` without ruff and ty; pair with `build-test-sqlite.yml` |
+| [`lint-imports.yml`](lint-imports.md) | PR open/update | Checks repository-owned import contracts |
 | [`release-drafter.yml`](release-drafter.md) | PR merged | Updates the standing draft release with the merged PR |
 | [`publish.yml`](publish.md) | Tag push | Verifies tag is on main, builds wheel and sdist, uploads as artifact |
 | [`deploy-docs.yml`](deploy-docs.md) | Tag push / `workflow_dispatch` | Installs `dev` extra and deploys MkDocs to GitHub Pages |
