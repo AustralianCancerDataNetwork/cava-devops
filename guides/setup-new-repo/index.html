@@ -478,6 +478,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/lint-imports/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lint-imports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/build-test-postgres-v2/" class="md-nav__link">
         
   
@@ -878,10 +906,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-delete-old-files" class="md-nav__link">
+  <a href="#4-dependency-ranges-on-sibling-packages-if-applicable" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Delete old files
+        4. Dependency ranges on sibling packages (if applicable)
       
     </span>
   </a>
@@ -889,15 +917,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-github-configuration" class="md-nav__link">
+  <a href="#5-keeping-uvlock-in-sync" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. GitHub configuration
+        5. Keeping uv.lock in sync
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="5. GitHub configuration">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-delete-old-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Delete old files
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-github-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. GitHub configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. GitHub configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -961,10 +1011,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-first-release-after-cutover" class="md-nav__link">
+  <a href="#8-first-release-after-cutover" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. First release after cutover
+        8. First release after cutover
       
     </span>
   </a>
@@ -1125,10 +1175,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-delete-old-files" class="md-nav__link">
+  <a href="#4-dependency-ranges-on-sibling-packages-if-applicable" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Delete old files
+        4. Dependency ranges on sibling packages (if applicable)
       
     </span>
   </a>
@@ -1136,15 +1186,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-github-configuration" class="md-nav__link">
+  <a href="#5-keeping-uvlock-in-sync" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. GitHub configuration
+        5. Keeping uv.lock in sync
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="5. GitHub configuration">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-delete-old-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Delete old files
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-github-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. GitHub configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. GitHub configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1208,10 +1280,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-first-release-after-cutover" class="md-nav__link">
+  <a href="#8-first-release-after-cutover" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. First release after cutover
+        8. First release after cutover
       
     </span>
   </a>
@@ -1356,7 +1428,28 @@ for details.</p>
 <h2 id="3-add-release-drafter-config">3. Add release-drafter config</h2>
 <p>Copy <code>templates/release-drafter.yml</code> from this repo to <code>.github/release-drafter.yml</code> in the package repo.</p>
 <hr />
-<h2 id="4-delete-old-files">4. Delete old files</h2>
+<h2 id="4-dependency-ranges-on-sibling-packages-if-applicable">4. Dependency ranges on sibling packages (if applicable)</h2>
+<p>Skip this step if the repo has no dependency on another CAVA package (e.g. <code>oa-configurator</code>, which is a base/leaf package with no siblings of its own).</p>
+<p>If this repo depends on one or more CAVA sibling packages, prefer a semver range over an exact pin once the sibling has itself migrated to this centralised CI/CD (its releases are label-gated, so MAJOR only happens on a <code>breaking</code>-labelled PR):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="s2">"oa-configurator&gt;=0.1.2,&lt;1.0.0"</span><span class="p">,</span><span class="w">  </span><span class="c1"># not =="0.1.2"</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">]</span>
+</code></pre></div>
+<p>CI installs with plain <code>uv sync</code>, which prefers what's already committed in <code>uv.lock</code> and only re-resolves if the lock no longer satisfies <code>pyproject.toml</code>. See <a href="#5-keeping-uvlock-in-sync">Keeping <code>uv.lock</code> in sync</a> below for how the committed lock stays consistent with <code>pyproject.toml</code>. Enable <strong>Dependabot security updates</strong> in the repo's settings (Advanced Security) for CVE coverage; no <code>dependabot.yml</code> file is needed for that.</p>
+<hr />
+<h2 id="5-keeping-uvlock-in-sync">5. Keeping <code>uv.lock</code> in sync</h2>
+<p>The shared test workflows install with plain <code>uv sync</code>. It prefers whatever is already committed in <code>uv.lock</code>, so a dependency that is still valid never gets bumped just because something newer shipped upstream. If the lock no longer satisfies <code>pyproject.toml</code>, it silently re-resolves in the CI runner and carries on, so a stale committed lock goes unnoticed. <code>uv sync --locked</code> fails instead, but it also fails on any staleness, and <code>--frozen</code> skips validation entirely. The committed <code>uv.lock</code> therefore has to be refreshed when <code>pyproject.toml</code> changes, without relying on someone remembering to run <code>uv lock</code> after every dependency edit.</p>
+<p>Install the canonical pre-commit hook:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>.githooks
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>cp<span class="w"> </span>&lt;path-to-cava-devops&gt;/templates/githooks/pre-commit<span class="w"> </span>.githooks/pre-commit
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>chmod<span class="w"> </span>+x<span class="w"> </span>.githooks/pre-commit
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>git<span class="w"> </span>config<span class="w"> </span>core.hooksPath<span class="w"> </span>.githooks
+</code></pre></div>
+<p><code>git config core.hooksPath</code> is a one-time, per-clone setting (not committed), so each contributor needs to run it once after cloning.</p>
+<p>What it does: when <code>pyproject.toml</code> is part of a commit, the hook diffs it to find exactly which dependency line(s) changed, then runs <code>uv lock --upgrade-package &lt;name&gt;</code> for just those, not a blanket <code>uv lock</code>. This touches only the package(s) you actually edited (plus whatever that package's new version transitively requires), never an unrelated dependency that merely has a newer release available. A changed line that is not a known package name is ignored by uv.</p>
+<p>This runs locally, before the commit is created, so <code>uv.lock</code> is already correct when the PR is opened.</p>
+<hr />
+<h2 id="6-delete-old-files">6. Delete old files</h2>
 <p>Remove these files if present in the repo:</p>
 <table>
 <thead>
@@ -1389,7 +1482,7 @@ for details.</p>
 </tbody>
 </table>
 <hr />
-<h2 id="5-github-configuration">5. GitHub configuration</h2>
+<h2 id="7-github-configuration">7. GitHub configuration</h2>
 <h3 id="merge-settings">Merge settings</h3>
 <p>In Settings &gt; General &gt; Pull Requests:</p>
 <table>
@@ -1510,12 +1603,12 @@ for details.</p>
 </table>
 <p>If the repo already has a trusted publisher from an old workflow (e.g. <code>python-publish.yml</code>), add a new one for <code>publish.yml</code> rather than editing the existing entry. The old entry becomes inert when the old workflow is deleted.</p>
 <h3 id="labels">Labels</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># From the cava-devops repo root:</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>scripts/bootstrap-labels.sh<span class="w"> </span>AustralianCancerDataNetwork/&lt;repo-name&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># From the cava-devops repo root:</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>scripts/bootstrap-labels.sh<span class="w"> </span>AustralianCancerDataNetwork/&lt;repo-name&gt;
 </code></pre></div>
 <p>This creates five labels: <code>breaking</code>, <code>feature</code>, <code>fix</code>, <code>dependencies</code> (bump labels) and <code>chore</code> (excluded from changelog, no version bump).</p>
 <hr />
-<h2 id="6-first-release-after-cutover">6. First release after cutover</h2>
+<h2 id="8-first-release-after-cutover">8. First release after cutover</h2>
 <p>Merge all migration changes via a PR labelled <code>chore</code>. <code>merge.yml</code> triggers and release-drafter creates a draft. What to do next depends on whether the repo has existing tags.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Existing tags</label><label for="__tabbed_1_2">No existing tags</label></div>
 <div class="tabbed-content">
