@@ -1,5 +1,8 @@
 # build-test-postgres-v2.yml
 
+!!! warning "Superseded"
+    Use [`build-test-postgres-v3.yml`](build-test-postgres-v3.md), which is identical without the ruff and ty steps. Pair it with [`build-test-sqlite.yml`](build-test-sqlite.md), [`ruff.yml`](ruff.md) and [`ty.yml`](ty.md). This workflow keeps working unchanged for existing callers.
+
 Includes a Postgres service container and runs **only** the `postgresql`-marked test suite (`pytest -q -m postgresql`). Supports both plain Postgres and pgvector via the `postgres-image` input.
 
 **Always pair this with [`build-test.yml`](build-test.md)** in a separate job. A repo's own `addopts` typically excludes `db_dialect`-marked tests from a plain `pytest -q` run by default — this workflow is what actually exercises those excluded tests. It deliberately does not also run the plain suite itself: that's `build-test.yml`'s job. One job per dialect axis, matching oa-configurator's per-dialect marker design.

@@ -1,10 +1,11 @@
 name: Build and Test (DuckDB)
 # Reusable workflow that runs only the duckdb-marked test suite. DuckDB is
-# embedded, so unlike build-test-postgres-v2.yml this needs no service
-# container. Pairs with build-test.yml, which runs everything else (the
+# embedded, so unlike build-test-postgres-v3.yml this needs no service
+# container. Pairs with build-test-sqlite.yml, which runs everything else (the
 # dialect-agnostic default suite). Never run this workflow alone: a repo
 # with duckdb-marked tests needs both jobs, or its default suite never runs
-# anywhere. Pass markers: 'duckdbvss' (or similar) for a repo whose
+# anywhere. Linting and type checking run as their own jobs through ruff.yml
+# and ty.yml. Pass markers: 'duckdbvss' (or similar) for a repo whose
 # DuckDB-specific tests carry a different marker name.
 on:
   workflow_call:
@@ -13,11 +14,6 @@ on:
         description: Python version to use
         type: string
         default: '3.12'
-        required: false
-      ruff:
-        description: Run ruff check
-        type: boolean
-        default: true
         required: false
       setup-commands:
         description: >
@@ -30,11 +26,6 @@ on:
         description: pytest -m marker expression selecting the DuckDB-only tests
         type: string
         default: 'duckdb'
-        required: false
-      ty-src:
-        description: Path passed to `ty check` for type checking
-        type: string
-        default: 'src/'
         required: false
 
 jobs:
@@ -55,13 +46,6 @@ jobs:
       - name: Run setup commands
         if: inputs.setup-commands != ''
         run: ${{ inputs.setup-commands }}
-
-      - name: Type check
-        run: uv run ty check ${{ inputs.ty-src }}
-
-      - name: Lint
-        if: inputs.ruff
-        run: uv run ruff check .
 
       - name: Test (duckdb-marked)
         # Exit 5 (no tests collected) is not an error

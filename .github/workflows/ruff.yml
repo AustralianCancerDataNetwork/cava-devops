@@ -1,0 +1,41 @@
+name: Ruff
+# Reusable workflow that runs ruff lint and format checks. It reads the pinned
+# ruff version from the caller's uv.lock and runs exactly that version without
+# installing the project or its dependencies, so it finishes in seconds.
+# Pair with ty.yml and the build-test-sqlite, build-test-postgres-v3 and
+# build-test-duckdb workflows, which no longer lint.
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: Python version to use
+        type: string
+        default: '3.12'
+        required: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      - name: Read locked ruff version
+        id: ruff
+        run: |
+          version=$(uv export --locked --all-extras --no-hashes --no-emit-project \
+            | grep -m1 '^ruff==' | sed -E 's/^ruff==([^ ;]+).*/\1/')
+          if [ -z "$version" ]; then
+            echo "ruff is not in uv.lock; add it to the dev extra." >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Lint
+        run: uvx ruff@${{ steps.ruff.outputs.version }} check .
+
+      - name: Format check
+        run: uvx ruff@${{ steps.ruff.outputs.version }} format --check .

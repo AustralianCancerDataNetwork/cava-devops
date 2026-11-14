@@ -1,5 +1,8 @@
 # build-test.yml
 
+!!! warning "Superseded"
+    Use [`build-test-sqlite.yml`](build-test-sqlite.md) for the tests, with [`ruff.yml`](ruff.md) and [`ty.yml`](ty.md) for linting and type checking. This workflow keeps working unchanged for existing callers.
+
 Checks out the repo, installs dependencies with `uv sync`, optionally runs `ruff`, then runs `pytest`. For repos that require a Postgres or pgvector service, use [`build-test-postgres.yml`](build-test-postgres.md) instead.
 
 ## Required status check name

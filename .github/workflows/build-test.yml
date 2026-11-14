@@ -1,4 +1,6 @@
 name: Build and Test
+# SUPERSEDED by build-test-sqlite.yml for the tests, with ruff.yml and ty.yml
+# for linting and type checking. Kept unchanged for existing callers.
 on:
   workflow_call:
     inputs:

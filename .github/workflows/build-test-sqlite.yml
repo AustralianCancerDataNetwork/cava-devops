@@ -1,0 +1,40 @@
+name: Build and Test (SQLite)
+# Reusable workflow that installs dependencies and runs the default pytest
+# suite, which needs no database service and runs against SQLite.
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: Python version to use
+        type: string
+        default: '3.12'
+        required: false
+      setup-commands:
+        description: >
+          Shell commands to run before tests (e.g. to write a config file).
+          Passed as a YAML block scalar; no external script file needed.
+        type: string
+        default: ''
+        required: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Run setup commands
+        if: inputs.setup-commands != ''
+        run: ${{ inputs.setup-commands }}
+
+      - name: Test
+        run: uv run pytest -q
