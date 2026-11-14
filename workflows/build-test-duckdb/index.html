@@ -13,17 +13,17 @@
         <link rel="canonical" href="https://australiancancerdatanetwork.github.io/cava-devops/workflows/build-test-duckdb/">
       
       
-        <link rel="prev" href="../build-test-postgres-v2/">
+        <link rel="prev" href="../build-test-postgres-v3/">
       
       
-        <link rel="next" href="../release-drafter/">
+        <link rel="next" href="../ruff/">
       
       
         
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -31,10 +31,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -452,6 +452,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../build-test-sqlite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-sqlite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../build-test-postgres/" class="md-nav__link">
         
   
@@ -480,14 +508,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../lint-imports/" class="md-nav__link">
+      <a href="../build-test-postgres-v2/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    lint-imports
+    build-test-postgres-v2
   
 
     
@@ -508,14 +536,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../build-test-postgres-v2/" class="md-nav__link">
+      <a href="../build-test-postgres-v3/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    build-test-postgres-v2
+    build-test-postgres-v3
   
 
     
@@ -629,10 +657,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pairing-with-build-testyml" class="md-nav__link">
+  <a href="#pairing-with-build-test-sqliteyml" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pairing with build-test.yml
+        Pairing with build-test-sqlite.yml
       
     </span>
   </a>
@@ -643,6 +671,90 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ruff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ruff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ty/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ty
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lint-imports/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lint-imports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -970,10 +1082,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pairing-with-build-testyml" class="md-nav__link">
+  <a href="#pairing-with-build-test-sqliteyml" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pairing with build-test.yml
+        Pairing with build-test-sqlite.yml
       
     </span>
   </a>
@@ -1002,12 +1114,13 @@
 
 <h1 id="build-test-duckdbyml">build-test-duckdb.yml</h1>
 <p>Needs no service container (DuckDB is embedded) and runs <strong>only</strong> the DuckDB-marked test suite (<code>pytest -q -m "duckdb"</code> by default). Pass <code>markers</code> for a repo whose DuckDB-specific tests carry a different marker name (e.g. <code>duckdbvss</code>).</p>
-<p><strong>Always pair this with <a href="../build-test/"><code>build-test.yml</code></a></strong> in a separate job. A repo's own <code>addopts</code> typically excludes <code>db_dialect</code>-marked tests from a plain <code>pytest -q</code> run by default — this workflow is what actually exercises those excluded tests. It deliberately does not also run the plain suite itself: that's <code>build-test.yml</code>'s job. One job per dialect axis, matching oa-configurator's per-dialect marker design (and <a href="../build-test-postgres-v2/"><code>build-test-postgres-v2.yml</code></a>'s).</p>
+<p><strong>Always pair this with <a href="../build-test-sqlite/"><code>build-test-sqlite.yml</code></a></strong> in a separate job. A repo's own <code>addopts</code> typically excludes <code>db_dialect</code>-marked tests from a plain <code>pytest -q</code> run by default; this workflow is what actually exercises those excluded tests. It deliberately does not also run the plain suite itself: that's <code>build-test-sqlite.yml</code>'s job. One job per dialect axis, matching oa-configurator's per-dialect marker design (and <a href="../build-test-postgres-v3/"><code>build-test-postgres-v3.yml</code></a>'s).</p>
+<p>It does not lint or type check. Run <a href="../ruff/"><code>ruff.yml</code></a> and <a href="../ty/"><code>ty.yml</code></a> as their own jobs. The old <code>ruff</code> and <code>ty-src</code> inputs no longer exist, so a caller that still passes them fails.</p>
 <p>A repo with no tests matching <code>markers</code> does not fail on this: pytest's exit code 5 ("no tests collected") is treated as a pass for this step. Any other nonzero exit still fails the job.</p>
 <h2 id="required-status-check-name">Required status check name</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>build-test / test
 </code></pre></div>
-<p>As with <code>build-test.yml</code>, the prefix is the calling job name.</p>
+<p>The prefix is the calling job name.</p>
 <h2 id="inputs">Inputs</h2>
 <table>
 <thead>
@@ -1026,12 +1139,6 @@
 <td>Python version</td>
 </tr>
 <tr>
-<td><code>ruff</code></td>
-<td>boolean</td>
-<td><code>true</code></td>
-<td>Whether to run <code>ruff check .</code></td>
-</tr>
-<tr>
 <td><code>setup-commands</code></td>
 <td>string</td>
 <td><code>''</code></td>
@@ -1043,16 +1150,10 @@
 <td><code>duckdb</code></td>
 <td><code>pytest -m</code> marker expression selecting the DuckDB-only tests</td>
 </tr>
-<tr>
-<td><code>ty-src</code></td>
-<td>string</td>
-<td><code>src/</code></td>
-<td>Path passed to <code>ty check</code> for type checking</td>
-</tr>
 </tbody>
 </table>
 <h2 id="usage">Usage</h2>
-<p>The snippet below shows this workflow's own job. Every usage also needs a paired <code>build-test.yml</code> job for the default suite.</p>
+<p>The snippet below shows this workflow's own job. Every usage also needs a paired <code>build-test-sqlite.yml</code> job for the default suite.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">jobs</span><span class="p">:</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">build-test-duckdb</span><span class="p">:</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-duckdb.yml@main</span>
@@ -1064,14 +1165,20 @@
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">markers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">duckdbvss</span>
 </code></pre></div>
-<h2 id="pairing-with-build-testyml">Pairing with build-test.yml</h2>
+<h2 id="pairing-with-build-test-sqliteyml">Pairing with build-test-sqlite.yml</h2>
 <p>Use distinct job names so both status checks are visible:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">jobs</span><span class="p">:</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">build-test-sqlite</span><span class="p">:</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test.yml@main</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-sqlite.yml@main</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">build-test-duckdb</span><span class="p">:</span>
 <a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-duckdb.yml@main</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="nt">ruff</span><span class="p">:</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AustralianCancerDataNetwork/cava-devops/.github/workflows/ruff.yml@main</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span><span class="nt">ty</span><span class="p">:</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AustralianCancerDataNetwork/cava-devops/.github/workflows/ty.yml@main</span>
 </code></pre></div>
 <p>The required status check names become <code>build-test-sqlite / test</code> and <code>build-test-duckdb / test</code>.</p>
 
@@ -1123,10 +1230,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

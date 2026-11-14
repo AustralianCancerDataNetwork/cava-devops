@@ -16,14 +16,14 @@
         <link rel="prev" href="../label-gate/">
       
       
-        <link rel="next" href="../build-test-postgres/">
+        <link rel="next" href="../build-test-sqlite/">
       
       
         
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -31,10 +31,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -532,14 +532,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../build-test-postgres/" class="md-nav__link">
+      <a href="../build-test-sqlite/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    build-test-postgres
+    build-test-sqlite
   
 
     
@@ -560,14 +560,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../lint-imports/" class="md-nav__link">
+      <a href="../build-test-postgres/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    lint-imports
+    build-test-postgres
   
 
     
@@ -616,6 +616,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../build-test-postgres-v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-postgres-v3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../build-test-duckdb/" class="md-nav__link">
         
   
@@ -624,6 +652,90 @@
     
   
     build-test-duckdb
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ruff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ruff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ty/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ty
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lint-imports/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lint-imports
   
 
     
@@ -979,6 +1091,10 @@
 
 
 <h1 id="build-testyml">build-test.yml</h1>
+<div class="admonition warning">
+<p class="admonition-title">Superseded</p>
+<p>Use <a href="../build-test-sqlite/"><code>build-test-sqlite.yml</code></a> for the tests, with <a href="../ruff/"><code>ruff.yml</code></a> and <a href="../ty/"><code>ty.yml</code></a> for linting and type checking. This workflow keeps working unchanged for existing callers.</p>
+</div>
 <p>Checks out the repo, installs dependencies with <code>uv sync</code>, optionally runs <code>ruff</code>, then runs <code>pytest</code>. For repos that require a Postgres or pgvector service, use <a href="../build-test-postgres/"><code>build-test-postgres.yml</code></a> instead.</p>
 <h2 id="required-status-check-name">Required status check name</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>build-test / test
@@ -1086,10 +1202,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

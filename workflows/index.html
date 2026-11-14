@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -31,10 +31,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -462,14 +462,14 @@
   
   
     <li class="md-nav__item">
-      <a href="build-test-postgres/" class="md-nav__link">
+      <a href="build-test-sqlite/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    build-test-postgres
+    build-test-sqlite
   
 
     
@@ -490,14 +490,14 @@
   
   
     <li class="md-nav__item">
-      <a href="lint-imports/" class="md-nav__link">
+      <a href="build-test-postgres/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    lint-imports
+    build-test-postgres
   
 
     
@@ -546,6 +546,34 @@
   
   
     <li class="md-nav__item">
+      <a href="build-test-postgres-v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-postgres-v3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="build-test-duckdb/" class="md-nav__link">
         
   
@@ -554,6 +582,90 @@
     
   
     build-test-duckdb
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ruff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ruff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ty/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ty
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lint-imports/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lint-imports
   
 
     
@@ -886,22 +998,42 @@
 <tr>
 <td><a href="build-test/"><code>build-test.yml</code></a></td>
 <td>PR open/update</td>
-<td>Installs, lints, and runs the test suite</td>
+<td>Superseded by <code>build-test-sqlite.yml</code>, <code>ruff.yml</code> and <code>ty.yml</code>. Installs, lints, and runs the test suite</td>
 </tr>
 <tr>
 <td><a href="build-test-postgres/"><code>build-test-postgres.yml</code></a></td>
 <td>PR open/update</td>
-<td>Full test suite with a Postgres service container</td>
+<td>Superseded by <code>build-test-postgres-v3.yml</code>. Full test suite with a Postgres service container</td>
 </tr>
 <tr>
 <td><a href="build-test-postgres-v2/"><code>build-test-postgres-v2.yml</code></a></td>
 <td>PR open/update</td>
-<td><code>postgresql</code>-marked suite with a Postgres service container; pair with <code>build-test.yml</code></td>
+<td>Superseded by <code>build-test-postgres-v3.yml</code>. <code>postgresql</code>-marked suite with a Postgres service container; pair with <code>build-test.yml</code></td>
 </tr>
 <tr>
 <td><a href="build-test-duckdb/"><code>build-test-duckdb.yml</code></a></td>
 <td>PR open/update</td>
-<td><code>duckdb</code>-marked suite, no service container needed; pair with <code>build-test.yml</code></td>
+<td><code>duckdb</code>-marked suite, no service container needed; no lint; pair with <code>build-test-sqlite.yml</code></td>
+</tr>
+<tr>
+<td><a href="ruff/"><code>ruff.yml</code></a></td>
+<td>PR open/update</td>
+<td><code>ruff check</code> and <code>ruff format --check</code> with the version locked in <code>uv.lock</code></td>
+</tr>
+<tr>
+<td><a href="ty/"><code>ty.yml</code></a></td>
+<td>PR open/update</td>
+<td><code>ty check</code> with the version locked in <code>uv.lock</code></td>
+</tr>
+<tr>
+<td><a href="build-test-sqlite/"><code>build-test-sqlite.yml</code></a></td>
+<td>PR open/update</td>
+<td>Default (SQLite) suite without ruff and ty; replaces <code>build-test.yml</code>; pair with <code>ruff.yml</code> and <code>ty.yml</code></td>
+</tr>
+<tr>
+<td><a href="build-test-postgres-v3/"><code>build-test-postgres-v3.yml</code></a></td>
+<td>PR open/update</td>
+<td><code>build-test-postgres-v2.yml</code> without ruff and ty; pair with <code>build-test-sqlite.yml</code></td>
 </tr>
 <tr>
 <td><a href="lint-imports/"><code>lint-imports.yml</code></a></td>
@@ -979,10 +1111,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>
