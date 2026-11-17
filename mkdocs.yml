@@ -51,6 +51,8 @@ nav:
     - label-gate: workflows/label-gate.md
     - build-test: workflows/build-test.md
     - build-test-sqlite: workflows/build-test-sqlite.md
+    - build-test-sqlite-v2: workflows/build-test-sqlite-v2.md
+    - build-test-nodb: workflows/build-test-nodb.md
     - build-test-postgres: workflows/build-test-postgres.md
     - build-test-postgres-v2: workflows/build-test-postgres-v2.md
     - build-test-postgres-v3: workflows/build-test-postgres-v3.md
@@ -66,3 +68,4 @@ nav:
     - Day-to-day PR workflow: guides/pr-workflow.md
     - Onboard a new repo: guides/setup-new-repo.md
     - Extending workflows: guides/extending-workflows.md
+    - Testing conventions: guides/testing-conventions.md

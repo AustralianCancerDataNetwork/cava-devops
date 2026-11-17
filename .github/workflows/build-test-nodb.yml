@@ -1,0 +1,51 @@
+name: Build and Test (no database)
+# Reusable workflow that runs every test carrying none of the routing marks.
+# An unmarked test needs no database, so this job needs no service. Pairs with
+# the dialect workflows (build-test-sqlite-v2.yml, build-test-duckdb.yml,
+# build-test-postgres-v3.yml), which run the marked tests. Pass exclude-markers
+# for a repo whose routing marks differ from the dialect names.
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: Python version to use
+        type: string
+        default: '3.12'
+        required: false
+      setup-commands:
+        description: >
+          Shell commands to run before tests (e.g. to write a config file).
+          Passed as a YAML block scalar; no external script file needed.
+        type: string
+        default: ''
+        required: false
+      exclude-markers:
+        description: pytest -m marker expression naming the routing marks to exclude
+        type: string
+        default: 'sqlite or duckdb or postgresql'
+        required: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Run setup commands
+        if: inputs.setup-commands != ''
+        run: ${{ inputs.setup-commands }}
+
+      - name: Test (no routing mark)
+        # pytest exits 5 when no test is collected, which fails the job.
+        env:
+          EXCLUDE_MARKERS: ${{ inputs.exclude-markers }}
+        run: uv run pytest -q -m "not ($EXCLUDE_MARKERS)"

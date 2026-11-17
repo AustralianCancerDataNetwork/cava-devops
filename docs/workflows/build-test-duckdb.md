@@ -2,19 +2,20 @@
 
 Needs no service container (DuckDB is embedded) and runs **only** the DuckDB-marked test suite (`pytest -q -m "duckdb"` by default). Pass `markers` for a repo whose DuckDB-specific tests carry a different marker name (e.g. `duckdbvss`).
 
-**Always pair this with [`build-test-sqlite.yml`](build-test-sqlite.md)** in a separate job. A repo's own `addopts` typically excludes `db_dialect`-marked tests from a plain `pytest -q` run by default; this workflow is what actually exercises those excluded tests. It deliberately does not also run the plain suite itself: that's `build-test-sqlite.yml`'s job. One job per dialect axis, matching oa-configurator's per-dialect marker design (and [`build-test-postgres-v3.yml`](build-test-postgres-v3.md)'s).
+**Always pair this with [`build-test-nodb.yml`](build-test-nodb.md)** in a separate job, which runs the tests that carry no routing mark. This workflow runs only the tests selected by `markers`. One job per routing mark.
 
 It does not lint or type check. Run [`ruff.yml`](ruff.md) and [`ty.yml`](ty.md) as their own jobs. The old `ruff` and `ty-src` inputs no longer exist, so a caller that still passes them fails.
 
-A repo with no tests matching `markers` does not fail on this: pytest's exit code 5 ("no tests collected") is treated as a pass for this step. Any other nonzero exit still fails the job.
+!!! tip "Use workflow only where needed"
+    A run that collects no tests fails. Do not call this workflow in a repo that has no tests for `markers`.
 
 ## Required status check name
 
 ```
-build-test / test
+build-test-duckdb / test
 ```
 
-The prefix is the calling job name.
+The check name is `{calling-job-name} / test`.
 
 ## Inputs
 
@@ -26,7 +27,7 @@ The prefix is the calling job name.
 
 ## Usage
 
-The snippet below shows this workflow's own job. Every usage also needs a paired `build-test-sqlite.yml` job for the default suite.
+The snippet below shows this workflow's own job. Every usage also needs a paired `build-test-nodb.yml` job.
 
 ```yaml
 jobs:
@@ -44,14 +45,14 @@ jobs:
       markers: duckdbvss
 ```
 
-## Pairing with build-test-sqlite.yml
+## Pairing with build-test-nodb.yml
 
-Use distinct job names so both status checks are visible:
+Use distinct job names so each status check is visible:
 
 ```yaml
 jobs:
-  build-test-sqlite:
-    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-sqlite.yml@main
+  build-test-nodb:
+    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-nodb.yml@main
 
   build-test-duckdb:
     uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-duckdb.yml@main
@@ -63,4 +64,6 @@ jobs:
     uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/ty.yml@main
 ```
 
-The required status check names become `build-test-sqlite / test` and `build-test-duckdb / test`.
+The required status check names become `build-test-nodb / test` and `build-test-duckdb / test`.
+
+See [Testing conventions](../guides/testing-conventions.md) for how tests choose their routing marks.

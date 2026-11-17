@@ -1,5 +1,8 @@
 # build-test-sqlite.yml
 
+!!! warning "Superseded"
+    Use [`build-test-sqlite-v2.yml`](build-test-sqlite-v2.md), which runs only the `sqlite`-marked tests, paired with [`build-test-nodb.yml`](build-test-nodb.md) for the tests without a routing mark. This workflow keeps working unchanged for existing callers.
+
 Checks out the repo, installs dependencies with `uv sync`, then runs the default `pytest -q` suite, which needs no database service and runs against SQLite. Replaces [`build-test.yml`](build-test.md). Linting and type checking run as their own jobs through [`ruff.yml`](ruff.md) and [`ty.yml`](ty.md).
 
 The `ruff` and `ty-src` inputs no longer exist. A caller that still passes them fails, which is intended: move them to the `ruff` and `ty` jobs.

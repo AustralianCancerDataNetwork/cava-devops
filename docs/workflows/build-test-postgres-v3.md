@@ -2,9 +2,11 @@
 
 [`build-test-postgres-v2.yml`](build-test-postgres-v2.md) without the ruff and ty steps. Runs only the `postgresql`-marked test suite against a live Postgres service container. Linting and type checking run as their own jobs through [`ruff.yml`](ruff.md) and [`ty.yml`](ty.md).
 
-**Always pair this with [`build-test-sqlite.yml`](build-test-sqlite.md)** in a separate job, or the dialect-agnostic default suite never runs.
+**Always pair this with [`build-test-nodb.yml`](build-test-nodb.md)** in a separate job, or the tests without a routing mark never run.
 
-The `ruff` and `ty-src` inputs no longer exist. A caller that still passes them fails, which is intended: move them to the `ruff` and `ty` jobs.
+!!! tip "Use workflow only where needed"
+    A run that collects no tests fails. Do not call this workflow in a repo that has no tests for `markers`.
+
 
 ## Required status check name
 
@@ -24,13 +26,14 @@ The check name is `{calling-job-name} / test`.
 | `postgres-db` | string | `test` | Database name to create |
 | `postgres-user` | string | `test` | Postgres user |
 | `postgres-password` | string | `test` | Postgres password |
+| `markers` | string | `postgresql` | `pytest -m` expression selecting the Postgres tests, e.g. `pgvector` |
 
 ## Usage
 
 ```yaml
 jobs:
-  build-test-sqlite:
-    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-sqlite.yml@main
+  build-test-nodb:
+    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-nodb.yml@main
   build-test-postgres:
     uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-postgres-v3.yml@main
     with:
@@ -42,3 +45,5 @@ jobs:
 ```
 
 For repos that need pgvector, pass `postgres-image: pgvector/pgvector:pg16`.
+
+See [Testing conventions](../guides/testing-conventions.md) for how tests choose their routing marks.

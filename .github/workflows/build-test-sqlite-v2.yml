@@ -1,0 +1,51 @@
+name: Build and Test (SQLite v2)
+# Reusable workflow that runs only the sqlite-marked test suite. SQLite is
+# embedded, so this needs no service container. Replaces build-test-sqlite.yml,
+# which ran the whole default suite. Pairs with build-test-nodb.yml, which runs
+# the tests that carry no routing mark. Pass markers for a repo whose SQLite
+# tests carry a different mark (e.g. 'sqlitevec').
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: Python version to use
+        type: string
+        default: '3.12'
+        required: false
+      setup-commands:
+        description: >
+          Shell commands to run before tests (e.g. to write a config file).
+          Passed as a YAML block scalar; no external script file needed.
+        type: string
+        default: ''
+        required: false
+      markers:
+        description: pytest -m marker expression selecting the SQLite tests
+        type: string
+        default: 'sqlite'
+        required: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Run setup commands
+        if: inputs.setup-commands != ''
+        run: ${{ inputs.setup-commands }}
+
+      - name: Test (sqlite-marked)
+        # pytest exits 5 when no test is collected, which fails the job.
+        env:
+          MARKERS: ${{ inputs.markers }}
+        run: uv run pytest -q -m "$MARKERS"

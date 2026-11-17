@@ -2,7 +2,7 @@
 
 Installs the full environment with `uv sync --locked --all-extras --dev` and runs `ty check` with the version locked in the caller's `uv.lock`. ty needs the project's dependencies to resolve imports, so unlike [`ruff.yml`](ruff.md) this installs everything. `--locked` fails the job if `uv.lock` is out of date.
 
-Pair with [`ruff.yml`](ruff.md) and the lint-free test workflows ([`build-test-sqlite.yml`](build-test-sqlite.md), [`build-test-postgres-v3.yml`](build-test-postgres-v3.md), [`build-test-duckdb.yml`](build-test-duckdb.md)).
+Pair with [`ruff.yml`](ruff.md) and any of the lint-free test workflows ([`build-test-nodb.yml`](build-test-nodb.md), [`build-test-sqlite-v2.yml`](build-test-sqlite-v2.md), [`build-test-postgres-v3.yml`](build-test-postgres-v3.md), [`build-test-duckdb.yml`](build-test-duckdb.md)).
 
 ## Required status check name
 
