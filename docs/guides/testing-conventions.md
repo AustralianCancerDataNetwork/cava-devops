@@ -158,9 +158,37 @@ jobs:
 
 ---
 
+## Missing databases
+
+A test whose database field is not configured fails, and the message names the field. There is no skip. Which tests run is decided by the routing marks, so a machine without PostgreSQL deselects them instead:
+
+```bash
+pytest -m "not postgresql"
+```
+
+A plain `pytest` runs every dialect and needs the test databases configured. In CI each job selects its own mark and provides its own infrastructure, so a green job has run its tests against that infrastructure.
+
+Optional dependencies are not skipped either. CI installs every extra, so a missing one fails the import.
+
+### Tests that need several infrastructures
+
+A test that uses fixtures of two dialects carries both routing marks, because each fixture checks its own. Only the job that has all the infrastructure can run it. Exclude it from the others with the `markers` input:
+
+```yaml
+jobs:
+  build-test-sqlite:
+    uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/build-test-sqlite-v2.yml@main
+    with:
+      markers: sqlite and not postgresql
+```
+
+The test then runs in the `postgresql` job, which also has SQLite available.
+
+---
+
 ## Banning inline engines
 
-Ruff's `TID251` bans the calls that open a database outside the fixtures:
+Ruff's `TID251` bans the calls that open a database outside the fixtures, and `pytest.importorskip`, because CI installs every extra and a missing dependency must fail instead of skipping:
 
 ```toml
 [tool.ruff.lint]
@@ -171,6 +199,7 @@ extend-select = ["TID251"]
 "sqlalchemy.engine.create_engine".msg = "Get a database from an isolated_test_database fixture."
 "sqlite3.connect".msg = "Get a database from an isolated_test_database fixture."
 "duckdb.connect".msg = "Get a database from an isolated_test_database fixture."
+"pytest.importorskip".msg = "CI installs every extra, so a missing dependency must fail, not skip."
 
 [tool.ruff.lint.per-file-ignores]
 "src/**" = ["TID251"]
