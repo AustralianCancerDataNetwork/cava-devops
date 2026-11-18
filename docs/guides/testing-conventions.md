@@ -207,11 +207,15 @@ extend-select = ["TID251"]
 ```
 
 !!! warning
-    It does not catch methods such as `resolved.create_engine()`. A test that opens an engine on purpose, such as a test of an engine guard, says why on the line:
+    The ban catches the free functions only. It does not catch methods such as `resolved.create_engine()`, so a test can still open an engine that way. Prefer a fixture built on `scoped_test_schema(...)` or `isolated_test_database(...)`, and put it in `conftest.py`.
+
+    A test that calls a banned function on purpose says why on the line:
 
     ```python
     admin = sa.create_engine(url)  # noqa: TID251 - admin connection to create the target database
     ```
+
+    A test that calls a method on purpose, such as a test of an engine guard, gets a comment above the call instead. A `noqa` there would be reported as unused (RUF100).
 
 ---
 
