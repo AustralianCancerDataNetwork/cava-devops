@@ -490,6 +490,62 @@
   
   
     <li class="md-nav__item">
+      <a href="build-test-sqlite-v2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-sqlite-v2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="build-test-nodb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-nodb
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="build-test-postgres/" class="md-nav__link">
         
   
@@ -934,6 +990,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/testing-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -981,84 +1065,129 @@
 
 <h1 id="workflow-reference">Workflow reference</h1>
 <p>All workflows are called via <code>uses: AustralianCancerDataNetwork/cava-devops/.github/workflows/&lt;name&gt;.yml@main</code>.</p>
+<p>Status <code>✅ Current</code> marks the workflows to use. <code>⛔ Superseded</code> workflows keep working unchanged for existing callers, but new repos should use the workflow in the "Use instead" column.</p>
 <table>
 <thead>
 <tr>
+<th>Status</th>
 <th>Workflow</th>
+<th>Use instead</th>
 <th>Trigger context</th>
 <th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td>✅ Current</td>
 <td><a href="label-gate/"><code>label-gate.yml</code></a></td>
+<td></td>
 <td>PR open/update</td>
 <td>Blocks merge until exactly one bump label is present</td>
 </tr>
 <tr>
-<td><a href="build-test/"><code>build-test.yml</code></a></td>
-<td>PR open/update</td>
-<td>Superseded by <code>build-test-sqlite.yml</code>, <code>ruff.yml</code> and <code>ty.yml</code>. Installs, lints, and runs the test suite</td>
-</tr>
-<tr>
-<td><a href="build-test-postgres/"><code>build-test-postgres.yml</code></a></td>
-<td>PR open/update</td>
-<td>Superseded by <code>build-test-postgres-v3.yml</code>. Full test suite with a Postgres service container</td>
-</tr>
-<tr>
-<td><a href="build-test-postgres-v2/"><code>build-test-postgres-v2.yml</code></a></td>
-<td>PR open/update</td>
-<td>Superseded by <code>build-test-postgres-v3.yml</code>. <code>postgresql</code>-marked suite with a Postgres service container; pair with <code>build-test.yml</code></td>
-</tr>
-<tr>
-<td><a href="build-test-duckdb/"><code>build-test-duckdb.yml</code></a></td>
-<td>PR open/update</td>
-<td><code>duckdb</code>-marked suite, no service container needed; no lint; pair with <code>build-test-sqlite.yml</code></td>
-</tr>
-<tr>
+<td>✅ Current</td>
 <td><a href="ruff/"><code>ruff.yml</code></a></td>
+<td></td>
 <td>PR open/update</td>
 <td><code>ruff check</code> and <code>ruff format --check</code> with the version locked in <code>uv.lock</code></td>
 </tr>
 <tr>
+<td>✅ Current</td>
 <td><a href="ty/"><code>ty.yml</code></a></td>
+<td></td>
 <td>PR open/update</td>
 <td><code>ty check</code> with the version locked in <code>uv.lock</code></td>
 </tr>
 <tr>
-<td><a href="build-test-sqlite/"><code>build-test-sqlite.yml</code></a></td>
+<td>✅ Current</td>
+<td><a href="build-test-nodb/"><code>build-test-nodb.yml</code></a></td>
+<td></td>
 <td>PR open/update</td>
-<td>Default (SQLite) suite without ruff and ty; replaces <code>build-test.yml</code>; pair with <code>ruff.yml</code> and <code>ty.yml</code></td>
+<td>Tests without a routing mark, no database needed; pair with the dialect workflows</td>
 </tr>
 <tr>
+<td>✅ Current</td>
+<td><a href="build-test-sqlite-v2/"><code>build-test-sqlite-v2.yml</code></a></td>
+<td></td>
+<td>PR open/update</td>
+<td><code>sqlite</code>-marked suite (or <code>markers</code>), no service container needed; pair with <code>build-test-nodb.yml</code></td>
+</tr>
+<tr>
+<td>✅ Current</td>
+<td><a href="build-test-duckdb/"><code>build-test-duckdb.yml</code></a></td>
+<td></td>
+<td>PR open/update</td>
+<td><code>duckdb</code>-marked suite (or <code>markers</code>), no service container needed; pair with <code>build-test-nodb.yml</code></td>
+</tr>
+<tr>
+<td>✅ Current</td>
 <td><a href="build-test-postgres-v3/"><code>build-test-postgres-v3.yml</code></a></td>
+<td></td>
 <td>PR open/update</td>
-<td><code>build-test-postgres-v2.yml</code> without ruff and ty; pair with <code>build-test-sqlite.yml</code></td>
+<td><code>postgresql</code>-marked suite (or <code>markers</code>) with a Postgres service container; pair with <code>build-test-nodb.yml</code></td>
 </tr>
 <tr>
+<td>✅ Current</td>
 <td><a href="lint-imports/"><code>lint-imports.yml</code></a></td>
+<td></td>
 <td>PR open/update</td>
 <td>Checks repository-owned import contracts</td>
 </tr>
 <tr>
+<td>✅ Current</td>
 <td><a href="release-drafter/"><code>release-drafter.yml</code></a></td>
+<td></td>
 <td>PR merged</td>
 <td>Updates the standing draft release with the merged PR</td>
 </tr>
 <tr>
+<td>✅ Current</td>
 <td><a href="publish/"><code>publish.yml</code></a></td>
+<td></td>
 <td>Tag push</td>
 <td>Verifies tag is on main, builds wheel and sdist, uploads as artifact</td>
 </tr>
 <tr>
+<td>✅ Current</td>
 <td><a href="deploy-docs/"><code>deploy-docs.yml</code></a></td>
+<td></td>
 <td>Tag push / <code>workflow_dispatch</code></td>
 <td>Installs <code>dev</code> extra and deploys MkDocs to GitHub Pages</td>
 </tr>
 <tr>
+<td>✅ Current</td>
 <td><a href="manual-release/"><code>manual-release.yml</code></a></td>
+<td></td>
 <td><code>workflow_dispatch</code></td>
 <td>Emergency: creates a tag and release directly from main</td>
+</tr>
+<tr>
+<td>⛔ Superseded</td>
+<td><a href="build-test-sqlite/"><code>build-test-sqlite.yml</code></a></td>
+<td><code>build-test-sqlite-v2.yml</code> and <code>build-test-nodb.yml</code></td>
+<td>PR open/update</td>
+<td>Default suite without ruff and ty</td>
+</tr>
+<tr>
+<td>⛔ Superseded</td>
+<td><a href="build-test-postgres-v2/"><code>build-test-postgres-v2.yml</code></a></td>
+<td><code>build-test-postgres-v3.yml</code></td>
+<td>PR open/update</td>
+<td><code>postgresql</code>-marked suite with a Postgres service container, with ruff and ty; pair with <code>build-test.yml</code></td>
+</tr>
+<tr>
+<td>⛔ Superseded</td>
+<td><a href="build-test-postgres/"><code>build-test-postgres.yml</code></a></td>
+<td><code>build-test-postgres-v3.yml</code> and <code>build-test-nodb.yml</code></td>
+<td>PR open/update</td>
+<td>Full test suite with a Postgres service container</td>
+</tr>
+<tr>
+<td>⛔ Superseded</td>
+<td><a href="build-test/"><code>build-test.yml</code></a></td>
+<td><code>build-test-nodb.yml</code>, the dialect workflows, <code>ruff.yml</code> and <code>ty.yml</code></td>
+<td>PR open/update</td>
+<td>Installs, lints, and runs the test suite</td>
 </tr>
 </tbody>
 </table>

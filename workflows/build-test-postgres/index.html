@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://australiancancerdatanetwork.github.io/cava-devops/workflows/build-test-postgres/">
       
       
-        <link rel="prev" href="../build-test-sqlite/">
+        <link rel="prev" href="../build-test-nodb/">
       
       
         <link rel="next" href="../build-test-postgres-v2/">
@@ -460,6 +460,62 @@
     
   
     build-test-sqlite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-test-sqlite-v2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-sqlite-v2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-test-nodb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-nodb
   
 
     
@@ -1026,6 +1082,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/testing-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1137,7 +1221,7 @@
 <h1 id="build-test-postgresyml">build-test-postgres.yml</h1>
 <div class="admonition warning">
 <p class="admonition-title">Superseded</p>
-<p>Use <a href="../build-test-postgres-v3/"><code>build-test-postgres-v3.yml</code></a> paired with <a href="../build-test-sqlite/"><code>build-test-sqlite.yml</code></a>, with <a href="../ruff/"><code>ruff.yml</code></a> and <a href="../ty/"><code>ty.yml</code></a> for linting and type checking. This workflow keeps working unchanged for existing callers.</p>
+<p>Use <a href="../build-test-postgres-v3/"><code>build-test-postgres-v3.yml</code></a> paired with <a href="../build-test-nodb/"><code>build-test-nodb.yml</code></a>, with <a href="../ruff/"><code>ruff.yml</code></a> and <a href="../ty/"><code>ty.yml</code></a> for linting and type checking. This workflow keeps working unchanged for existing callers.</p>
 </div>
 <p>Identical to <a href="../build-test/"><code>build-test.yml</code></a> but includes a Postgres service container. Use this for repos whose test suite requires a running database. Supports both plain Postgres and pgvector via the <code>postgres-image</code> input.</p>
 <h2 id="required-status-check-name">Required status check name</h2>

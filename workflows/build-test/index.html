@@ -560,6 +560,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../build-test-sqlite-v2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-sqlite-v2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-test-nodb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-nodb
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../build-test-postgres/" class="md-nav__link">
         
   
@@ -1004,6 +1060,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/testing-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1093,7 +1177,7 @@
 <h1 id="build-testyml">build-test.yml</h1>
 <div class="admonition warning">
 <p class="admonition-title">Superseded</p>
-<p>Use <a href="../build-test-sqlite/"><code>build-test-sqlite.yml</code></a> for the tests, with <a href="../ruff/"><code>ruff.yml</code></a> and <a href="../ty/"><code>ty.yml</code></a> for linting and type checking. This workflow keeps working unchanged for existing callers.</p>
+<p>Use <a href="../build-test-nodb/"><code>build-test-nodb.yml</code></a> and the dialect workflows for the tests, with <a href="../ruff/"><code>ruff.yml</code></a> and <a href="../ty/"><code>ty.yml</code></a> for linting and type checking. This workflow keeps working unchanged for existing callers.</p>
 </div>
 <p>Checks out the repo, installs dependencies with <code>uv sync</code>, optionally runs <code>ruff</code>, then runs <code>pytest</code>. For repos that require a Postgres or pgvector service, use <a href="../build-test-postgres/"><code>build-test-postgres.yml</code></a> instead.</p>
 <h2 id="required-status-check-name">Required status check name</h2>

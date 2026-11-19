@@ -480,6 +480,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../build-test-sqlite-v2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-sqlite-v2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-test-nodb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-nodb
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../build-test-postgres/" class="md-nav__link">
         
   
@@ -1015,6 +1071,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/testing-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1114,7 +1198,7 @@
 
 <h1 id="tyyml">ty.yml</h1>
 <p>Installs the full environment with <code>uv sync --locked --all-extras --dev</code> and runs <code>ty check</code> with the version locked in the caller's <code>uv.lock</code>. ty needs the project's dependencies to resolve imports, so unlike <a href="../ruff/"><code>ruff.yml</code></a> this installs everything. <code>--locked</code> fails the job if <code>uv.lock</code> is out of date.</p>
-<p>Pair with <a href="../ruff/"><code>ruff.yml</code></a> and the lint-free test workflows (<a href="../build-test-sqlite/"><code>build-test-sqlite.yml</code></a>, <a href="../build-test-postgres-v3/"><code>build-test-postgres-v3.yml</code></a>, <a href="../build-test-duckdb/"><code>build-test-duckdb.yml</code></a>).</p>
+<p>Pair with <a href="../ruff/"><code>ruff.yml</code></a> and any of the lint-free test workflows (<a href="../build-test-nodb/"><code>build-test-nodb.yml</code></a>, <a href="../build-test-sqlite-v2/"><code>build-test-sqlite-v2.yml</code></a>, <a href="../build-test-postgres-v3/"><code>build-test-postgres-v3.yml</code></a>, <a href="../build-test-duckdb/"><code>build-test-duckdb.yml</code></a>).</p>
 <h2 id="required-status-check-name">Required status check name</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ty / check
 </code></pre></div>

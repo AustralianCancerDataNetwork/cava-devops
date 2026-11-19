@@ -16,7 +16,7 @@
         <link rel="prev" href="../build-test/">
       
       
-        <link rel="next" href="../build-test-postgres/">
+        <link rel="next" href="../build-test-sqlite-v2/">
       
       
         
@@ -560,6 +560,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../build-test-sqlite-v2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-sqlite-v2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-test-nodb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build-test-nodb
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../build-test-postgres/" class="md-nav__link">
         
   
@@ -1004,6 +1060,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/testing-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1091,6 +1175,10 @@
 
 
 <h1 id="build-test-sqliteyml">build-test-sqlite.yml</h1>
+<div class="admonition warning">
+<p class="admonition-title">Superseded</p>
+<p>Use <a href="../build-test-sqlite-v2/"><code>build-test-sqlite-v2.yml</code></a>, which runs only the <code>sqlite</code>-marked tests, paired with <a href="../build-test-nodb/"><code>build-test-nodb.yml</code></a> for the tests without a routing mark. This workflow keeps working unchanged for existing callers.</p>
+</div>
 <p>Checks out the repo, installs dependencies with <code>uv sync</code>, then runs the default <code>pytest -q</code> suite, which needs no database service and runs against SQLite. Replaces <a href="../build-test/"><code>build-test.yml</code></a>. Linting and type checking run as their own jobs through <a href="../ruff/"><code>ruff.yml</code></a> and <a href="../ty/"><code>ty.yml</code></a>.</p>
 <p>The <code>ruff</code> and <code>ty-src</code> inputs no longer exist. A caller that still passes them fails, which is intended: move them to the <code>ruff</code> and <code>ty</code> jobs.</p>
 <p>For the dialect-specific suites, pair it with <a href="../build-test-postgres-v3/"><code>build-test-postgres-v3.yml</code></a> or <a href="../build-test-duckdb/"><code>build-test-duckdb.yml</code></a>.</p>
