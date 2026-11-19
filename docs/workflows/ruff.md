@@ -2,7 +2,7 @@
 
 Runs `ruff check .` and `ruff format --check .` with the exact ruff version locked in the caller's `uv.lock`. It reads the version with `uv export` and runs it through `uvx`, so it does not install the project or its dependencies. ruff must be in the repo's `dev` extra, otherwise the job fails with a message saying so.
 
-Pair with [`ty.yml`](ty.md) and the lint-free test workflows ([`build-test-sqlite.yml`](build-test-sqlite.md), [`build-test-postgres-v3.yml`](build-test-postgres-v3.md), [`build-test-duckdb.yml`](build-test-duckdb.md)).
+Pair with [`ty.yml`](ty.md) and any of the lint-free test workflows ([`build-test-nodb.yml`](build-test-nodb.md), [`build-test-sqlite-v2.yml`](build-test-sqlite-v2.md), [`build-test-postgres-v3.yml`](build-test-postgres-v3.md), [`build-test-duckdb.yml`](build-test-duckdb.md)).
 
 ## Required status check name
 

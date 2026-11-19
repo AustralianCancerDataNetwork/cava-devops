@@ -1,4 +1,7 @@
 name: Build and Test (SQLite)
+# SUPERSEDED by build-test-sqlite-v2.yml, which runs only the sqlite-marked
+# tests, paired with build-test-nodb.yml. Kept unchanged for existing callers.
+#
 # Reusable workflow that installs dependencies and runs the default pytest
 # suite, which needs no database service and runs against SQLite.
 on:
